@@ -245,4 +245,238 @@ println(numbers.joinToString())
 
 ```
 
+# 4.集合操作
 
+## 扩展与成员函数
+
+集合操作在标准库中以两种方式声明：集合接口的[成员函数](https://www.kotlincn.net/docs/reference/classes.html#类成员)和[扩展函数](https://www.kotlincn.net/docs/reference/extensions.html#扩展函数)
+
+创建自己的集合接口实现时，必须实现其成员函数。 为了使新实现的创建更加容易，请使用标准库中集合接口的框架实现：[`AbstractCollection`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-abstract-collection/index.html)、[`AbstractList`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-abstract-list/index.html)、[`AbstractSet`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-abstract-set/index.html)、[`AbstractMap`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-abstract-map/index.html) 及其相应可变抽象类。
+
+
+
+- [集合过滤](https://www.kotlincn.net/docs/reference/collection-filtering.html)
+
+  ​	按谓词过滤 filter
+
+  ```
+  val numbers = listOf("one", "two", "three", "four")  
+  val longerThan3 = numbers.filter { it.length > 3 }
+  println(longerThan3)
+  
+  val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key11" to 11)
+  val filteredMap = numbersMap.filter { (key, value) -> key.endsWith("1") && value > 10}
+  println(filteredMap)
+  ```
+
+  filterIndexed()：使用元素在集合中的位置过滤
+
+  filterNot() 反向过滤
+
+  [`filterIsInstance()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-is-instance.html) 返回给定类型的集合元素
+
+  [`filterNotNull()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not-null.html) 返回所有的非空元素
+
+   [`partition()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/partition.html) – 通过一个谓词过滤集合并且将不匹配的元素存放在一个单独的列表中
+
+  ```
+  val numbers = listOf("one", "two", "three", "four")
+  val (match, rest) = numbers.partition { it.length > 3 }
+  
+  println(match)
+  println(rest)
+  
+  result:
+  [three, four]
+  [one, two]
+  ```
+
+  - 如果至少有一个元素匹配给定谓词，那么 [`any()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/any.html) 返回 `true`。
+  - 如果没有元素与给定谓词匹配，那么 [`none()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/none.html) 返回 `true`。
+  - 如果所有元素都匹配给定谓词，那么 [`all()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/all.html) 返回 `true`
+  - **注意，在一个空集合上使用任何有效的谓词去调用 `all()` 都会返回 `true` 。这种行为在逻辑上被称为 [*vacuous truth*](https://en.wikipedia.org/wiki/Vacuous_truth)**。
+
+- [`plus` 与 `minus` 操作符](https://www.kotlincn.net/docs/reference/collection-plus-minus.html)
+
+  ```kotlin
+  val numbers = listOf("one", "two", "three", "four")
+  //Plus 相当于累加
+  val plusList = numbers + "five"
+  //minus 去除
+  val minusList = numbers - listOf("three", "four")
+  println(plusList)
+  println(minusList)
+  
+  [one, two, three, four, five]
+  [one, two]
+  ```
+
+  
+
+- [分组](https://www.kotlincn.net/docs/reference/collection-grouping.html)、
+
+  ​	Kotlin 标准库提供用于对集合元素进行分组的扩展函数。 基本函数 [`groupBy()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/group-by.html) 使用一个 lambda 函数并返回一个 **`Map`。**
+
+  ```
+  val numbers = listOf("one", "two", "three", "four", "five")
+  
+  println(numbers.groupBy { it.first().toUpperCase() })
+  println(numbers.groupBy(keySelector = { it.first() }, valueTransform = { it.toUpperCase() }))
+  
+  {O=[one], T=[two, three], F=[four, five]}
+  {o=[ONE], t=[TWO, THREE], f=[FOUR, FIVE]}
+  ```
+
+  
+
+- [取集合的一部分](https://www.kotlincn.net/docs/reference/collection-parts.html)
+
+  [`slice()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/slice.html) 返回具有给定索引的集合元素列表
+
+  ```
+  val numbers = listOf("one", "two", "three", "four", "five", "six")    
+  println(numbers.slice(1..3))
+  println(numbers.slice(0..4 step 2))
+  println(numbers.slice(setOf(3, 5, 0)))    
+  
+  
+  
+  ```
+  
+  **Take 与 drop**
+  
+  从头开始**获取**指定数量的元素，请使用 [`take()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take.html) 函数。 从尾开始获取指定数量的元素，请使用 [`takeLast()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last.html)。
+  
+  从头或从尾**去除**给定数量的元素，请调用 [`drop()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop.html) 或 [`dropLast()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop-last.html) 函数。
+
+```kotlin
+val numbers = listOf("one", "two", "three", "four", "five", "six")
+//从头获取三个
+println(numbers.take(3))
+println(numbers.takeLast(3))
+//从头去除一个
+println(numbers.drop(1))
+println(numbers.dropLast(5))
+
+[one, two, three]
+[four, five, six]
+[two, three, four, five, six]
+[one]
+```
+
+**Chunked** 分块
+
+要将集合分解为给定大小的“块”
+
+```
+fun main() {
+    val numbers = (0..10).toList()
+    //每3个元素一块数据
+    println(numbers.chunked(3))
+}
+
+[[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10]]
+```
+
+**windowed**????不好理解
+
+可以检索给定大小的集合元素中所有可能区间
+
+
+
+- [取单个元素](https://www.kotlincn.net/docs/reference/collection-elements.html)
+
+  
+
+  ```
+  // elementAt(index) 按下标取
+  val numbers = linkedSetOf("one", "two", "three", "four", "five")
+  println(numbers.elementAt(3))    
+  
+  //函数 first() 和 last() 
+  val numbers = listOf("one", "two", "three", "four", "five", "six")
+  println(numbers.first { it.length > 3 })
+  println(numbers.last { it.startsWith("f") })
+  
+   random() 函数 随机取
+    contains() 函数 是否存在
+    
+  ```
+
+  
+
+- [集合排序](https://www.kotlincn.net/docs/reference/collection-ordering.html)
+
+  类似Java里对象之间可以比较，比较就可以排序。可以继承compareable，重写方法compareTo
+
+  ```kotlin
+  class Version(val major: Int, val minor: Int): Comparable<Version> {
+      override fun compareTo(other: Version): Int {
+          if (this.major != other.major) {
+              return this.major - other.major
+          } else if (this.minor != other.minor) {
+              return this.minor - other.minor
+          } else return 0
+      }
+  }
+  
+  fun main() {    
+      println(Version(1, 2) > Version(1, 3))
+      println(Version(2, 0) > Version(1, 5))
+  }
+  
+  //如需为类型定义自定义顺序，可以为其创建一个 Comparator。 Comparator 包含 compare() 函数：它接受一个类的两个实例并返回它们之间比较的整数结果。
+  
+  val lengthComparator = Comparator { str1: String, str2: String -> str1.length - str2.length }
+  println(listOf("aaa", "bb", "c").sortedWith(lengthComparator))
+  ```
+
+  `Comparator` 的一种比较简短的方式是标准库中的 [`compareBy()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.comparisons/compare-by.html) 函数
+
+  ```
+  println(listOf("aaa", "bb", "c").sortedWith(compareBy { it.length }))
+  ```
+
+  基本的函数
+
+   [`sorted()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sorted.html)  升序
+
+   [`sortedDescending()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sorted-descending.html)   降序
+
+   [`reversed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reversed.html) 函数以相反的顺序检索集合。
+
+  [`asReversed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/as-reversed.html) 反向函数
+
+  [`shuffled()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/shuffled.html) 函数  随机产生一个新的list
+
+- [集合聚合操作](https://www.kotlincn.net/docs/reference/collection-aggregate.html)
+  - [`min()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/min.html) 与 [`max()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max.html) 分别返回最小和最大的元素；
+  - [`average()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/average.html) 返回数字集合中元素的平均值；
+  - [`sum()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum.html) 返回数字集合中元素的总和；
+  - [`count()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/count.html) 返回集合中元素的数量；
+
+## list
+
+- [`getOrElse()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-else.html) 提供用于计算默认值的函数，如果集合中不存在索引，则返回默认值。
+
+- [`getOrNull()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-null.html) 返回 `null` 作为默认值。
+
+  这两个方法能避免找不到元素异常
+
+  **subList**  取一部分
+
+   [`indexOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/index-of.html) 获取下标
+
+   [`lastIndexOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-index-of.html) 
+
+   [`binarySearch()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/binary-search.html) 函数  二分查找
+
+  
+
+# set
+
+  查找交集、并集或差集。
+
+要将两个集合合并为一个（并集），可使用 [`union()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/union.html) 函数。
+
+要查找两个集合中都存在的元素（交集），请使用 [`intersect()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/intersect.html) 。
