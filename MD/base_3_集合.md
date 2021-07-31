@@ -247,7 +247,7 @@ println(numbers.joinToString())
 
 # 4.集合操作
 
-## 扩展与成员函数
+## 1.扩展与成员函数
 
 集合操作在标准库中以两种方式声明：集合接口的[成员函数](https://www.kotlincn.net/docs/reference/classes.html#类成员)和[扩展函数](https://www.kotlincn.net/docs/reference/extensions.html#扩展函数)
 
@@ -455,7 +455,7 @@ fun main() {
   - [`sum()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum.html) 返回数字集合中元素的总和；
   - [`count()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/count.html) 返回集合中元素的数量；
 
-## list
+## 2.list
 
 - [`getOrElse()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-else.html) 提供用于计算默认值的函数，如果集合中不存在索引，则返回默认值。
 
@@ -473,10 +473,116 @@ fun main() {
 
   
 
-# set
+## 3. set
 
   查找交集、并集或差集。
 
 要将两个集合合并为一个（并集），可使用 [`union()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/union.html) 函数。
 
 要查找两个集合中都存在的元素（交集），请使用 [`intersect()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/intersect.html) 。
+
+要查找另一个集合中不存在的集合元素（差集），请使用 [`subtract()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/subtract.html) 
+
+```kotlin
+val numbers = setOf("one", "two", "three")
+
+println(numbers union setOf("four", "five"))
+println(setOf("four", "five") union numbers)
+
+println(numbers intersect setOf("two", "one"))
+println(numbers subtract setOf("three", "four"))
+println(numbers subtract setOf("four", "three")) // 相同的输出
+
+[one, two, three, four, five]
+[four, five, one, two, three]
+[one, two]
+[one, two]
+[one, two]
+```
+
+## 4.map
+
+```kotlin
+val numbersMap = mapOf("one" to 1, "two" to 2, "three" to 3)
+//根据key 去value
+println(numbersMap.get("one"))
+//另一种方式
+println(numbersMap["one"])
+
+println(numbersMap.getOrDefault("four", 10))
+println(numbersMap["five"])               // null
+//numbersMap.getValue("six")  
+```
+
+- [`getOrElse()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-else.html) 与 list 的工作方式相同：对于不存在的键，其值由给定的 lambda 表达式返回。
+- [`getOrDefault()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-default.html) 如果找不到键，则返回指定的默认值。
+
+`keys` 是 Map 中所有键的集合， `values` 是 Map 中所有值的集合。
+
+```
+val numbersMap = mapOf("one" to 1, "two" to 2, "three" to 3)
+println(numbersMap.keys)
+println(numbersMap.values)
+```
+
+### 4.1过滤
+
+```kotlin
+val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key11" to 11)
+//根据filter过滤符合条件的数据
+val filteredMap = numbersMap.filter { (key, value) -> key.endsWith("1") && value > 10}
+println(filteredMap)
+
+// filterKeys() 和 filterValues() 也可以通过两种形式过滤
+```
+
+### 4.2`plus` 与 `minus` 操作
+
+```kotlin
+val numbersMap = mapOf("one" to 1, "two" to 2, "three" to 3)
+//累加map 集合数据，以pair形式添加
+println(numbersMap + Pair("four", 4))
+//如果存在key,会进行value的覆盖
+println(numbersMap + Pair("one", 10))
+//可以接收map形式的数据
+println(numbersMap + mapOf("five" to 5, "one" to 11))
+
+
+//minus 将根据左侧 Map 条目创建一个新 Map ，右侧操作数带有键的条目将被剔除。 因此，右侧操作数可以是单个键或键的集合： list 、 set 等。
+val numbersMap = mapOf("one" to 1, "two" to 2, "three" to 3)
+println(numbersMap - "one")
+println(numbersMap - listOf("two", "four"))
+```
+
+**关于在可变 Map 中使用 [`plusAssign`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/plus-assign.html)（`+=`）与 [`minusAssign`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/minus-assign.html)（`-=`）运算符的详细信息**
+
+### 4.3 增删改查
+
+put 
+
+putall()  它的参数可以是 `Map` 或一组 `Pair` ： `Iterable` 、 `Sequence` 或 `Array` 。
+
++= 追加map数据
+
+-= 移除map 数据
+
+[]  设置新的数据
+
+```kotlin
+val numbersMap = mutableMapOf("one" to 1, "two" to 2)
+numbersMap["three"] = 3     // 调用 numbersMap.set("three", 3)
+numbersMap += mapOf("four" to 4, "five" to 5)
+numbersMap -= "four" //根据key移除数据
+println(numbersMap)
+```
+
+Remove()
+
+```kotlin
+val numbersMap = mutableMapOf("one" to 1, "two" to 2, "three" to 3, "threeAgain" to 3)
+numbersMap.keys.remove("one")//根据key 移除
+println(numbersMap)
+numbersMap.values.remove(3) //根据value 移除
+println(numbersMap)
+```
+
