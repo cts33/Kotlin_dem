@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.lll.kotlin_dem.MotoBean
 import com.lll.kotlin_dem.R
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
                 val body = response.body()
 
-                motoAdpter.setListData(body!!.data)
+                motoAdpter.setListData(body!!.data!!)
 
             }
 

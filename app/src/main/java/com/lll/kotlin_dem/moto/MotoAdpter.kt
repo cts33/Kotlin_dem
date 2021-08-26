@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.lll.kotlin_dem.DataItem
 import com.lll.kotlin_dem.R
 
 class MotoAdpter(val mContext: Context) : Adapter<MotoAdpter.MyViewHolder>() {
 
-     var mDatas:ArrayList< Datam> = ArrayList()
+     var mDatas:ArrayList<DataItem> = ArrayList()
 
-   fun setListData(  list:List< Datam>){
+   fun setListData(  list:List< DataItem>){
 
        if (list==null){
            return
@@ -41,9 +42,9 @@ class MotoAdpter(val mContext: Context) : Adapter<MotoAdpter.MyViewHolder>() {
 
     override fun onBindViewHolder(viewHolder: MyViewHolder, pos: Int) {
 
-        val datam = mDatas[pos]
-        viewHolder.title.setText(datam.brandName+"   "+datam.goodName)
-        Glide.with(mContext).load(datam.goodPic).into(viewHolder.img)
+        val DataItem = mDatas[pos]
+        viewHolder.title.setText(DataItem.brandName+"   "+DataItem.goodName)
+        Glide.with(mContext).load(DataItem.goodPic).into(viewHolder.img)
     }
 
     override fun getItemCount(): Int {
