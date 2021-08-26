@@ -1,2 +1,3 @@
 rootProject.name = "Kotlin_dem"
 include ':app'
+//include ':test'
