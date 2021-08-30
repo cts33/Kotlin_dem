@@ -11,7 +11,7 @@ class Repository private constructor() {
     val formattedUserNames: List<String>
         get() {
             val userNames: MutableList<String> = ArrayList(  users!!.size  )
-            for ((firstName, lastName) in users) {
+            for ((firstName, lastName) in users!!) {
                 val name = if(firstName!=null){
                     if (lastName!=null){
                         "$firstName  $lastName"
@@ -49,7 +49,7 @@ class Repository private constructor() {
         val user3 = User("Anne", "Doe")
         users = ArrayList()
         users!!.add(user1)
-        users.add(user2)
-        users.add(user3)
+//        users.add(user2)
+//        users.add(user3)
     }
 }
