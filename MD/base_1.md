@@ -1,3 +1,25 @@
+# 常见问题
+## 1.！！ 不做非空校验。如果运行时发现变量为空，就扔出异常
+## 2.java kotlin交互的语法
+
+java code
+TestMain.class
+
+kotlin code
+TestMain::class.java
+
+//传入一个class对象
+kotlin: testClass（JavaMain::class.java）
+## 3.没有封装类 静态变量
+返回值 尽量可空类型
+
+## 4.扩展函数--给某些提供了增加函数的功能，静态解析
+
+var file = File("/mp4");
+println(file.readText())
+
+
+
 
 
 # 1.基础
