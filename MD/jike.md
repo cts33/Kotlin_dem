@@ -121,6 +121,20 @@ public typealias A = File
 Anko Kolly build.gradle 内部DSL
 
 
+# 10 常量 变量 只读
+
+javap *.class  反编译class
+
+-l
+-public
+
+val 不能有setter，不能再赋值
+val 不等于常量
+
+const val v =0; //常量
+
+
+
 
 
 
