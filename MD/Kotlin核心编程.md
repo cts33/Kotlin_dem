@@ -182,6 +182,70 @@ countryApp.filterCountries(countries,fun(country:Country):Boolean{
 
 ### 2.3.6 Lambda语法糖
 
+```
+countryApp.filterCountries(countries, { country ->
+		country.continient == "EU" && country.population > 10000
+})
+```
+
+lambda语法：
+
+1.使用大括号
+
+2.如果lambda声明了部分参数，返回值类型支持类型推导，那么Lambda就可以省略函数类型声明
+
+3.如果lambda变量声明了函数类型，那么lambda参数部分的类型就可以省略
+
+eg:
+
+```
+	//有参数加：
+	val sum0: (Int, Int) -> Int = { x: Int, y: Int ->
+		x + y
+	}
+	val sum1 = { x: Int, y: Int ->
+		x + y
+	}
+
+	val sum2: (Int, Int) -> Int = { x, y ->
+		x + y
+	}
+```
+
+如果lambda表达式返回的不是Unit,那默认最后一行就是返回值类型。
+
+* 单个参数的隐式名称
+
+  ```
+  fun foo(i: Int) = {
+  	print(i)
+  }
+  //注意it
+  listOf(1, 2, 3).forEach { foo(it) }
+  listOf(1, 2, 3).forEach { foo(it).invoke() }
+  listOf(1, 2, 3).forEach { foo(it)() }
+  ```
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # 3.Kotlin核心
