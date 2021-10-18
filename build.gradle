@@ -28,14 +28,14 @@ task clean(type: Delete) {
 }
 
 
-task helloClosure<<{
-    customEach{
-        print it
-    }
-}
+//task helloClosure<<{
+//    customEach{
+//        print it
+//    }
+//}
 
-def customEach(closure){
-    for (i in 0..<10) {
-        closure(i)
-    }
-}
+//def customEach(closure){
+//    for (i in 0..<10) {
+//        closure(i)
+//    }
+//}
