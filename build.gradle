@@ -27,15 +27,3 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
-//task helloClosure<<{
-//    customEach{
-//        print it
-//    }
-//}
-
-//def customEach(closure){
-//    for (i in 0..<10) {
-//        closure(i)
-//    }
-//}
