@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             .build()
             .create(Api::class.java)
 
-        val motoList = motobean.getMotoList(9)
+        val motoList = motobean.getMotoList("")
         motoList.enqueue(object : Callback<MotoBean> {
             override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
                 val body = response.body()
