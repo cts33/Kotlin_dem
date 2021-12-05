@@ -1,4 +1,4 @@
-package com.lll.kotlin_dem
+package com.lll.kotlin_dem.bean
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,12 +1,16 @@
-package com.lll.kotlin_dem.moto
+package com.lll.kotlin_dem.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.lll.kotlin_dem.MotoBean
+
+import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.R
+import com.lll.kotlin_dem.moto.Api
+import com.lll.kotlin_dem.moto.Constants
+import com.lll.kotlin_dem.adapter.MotoAdpter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,9 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         recycler = findViewById<RecyclerView>(R.id.recycler)
 
+        
         recycler.layoutManager = LinearLayoutManager(this)
         motoAdpter = MotoAdpter(this)
-        recycler.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+        recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recycler.adapter = motoAdpter
 
 
@@ -33,14 +38,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
 
-       var motobean:Api =   Retrofit.Builder()
-            .baseUrl(Constants.koubeiUrl)
+        var motobean: Api = Retrofit.Builder()
+            .baseUrl(Constants.baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)
 
         val motoList = motobean.getMotoList(9)
-        motoList.enqueue(object: Callback<MotoBean>{
+        motoList.enqueue(object : Callback<MotoBean> {
             override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
                 val body = response.body()
 
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<MotoBean>, t: Throwable) {
-                TODO("Not yet implemented")
+
 
             }
         }
