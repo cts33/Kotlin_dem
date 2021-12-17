@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lll.kotlin_dem.adapter.MotoAdpter
 import com.lll.kotlin_dem.bean.MotoBean
@@ -43,6 +44,10 @@ class TabFragment : Fragment() {
 
     private fun initViews(view: View) {
         recyclerview = view.findViewById(R.id.recyclerview)
+        recyclerview.layoutManager = LinearLayoutManager(activity)
+
+        motoAdpter = MotoAdpter(activity!!)
+        recyclerview.adapter = motoAdpter
     }
 
     override fun onCreateView(
@@ -54,12 +59,14 @@ class TabFragment : Fragment() {
         return View.inflate(activity, R.layout.tab_fragment, null)
     }
 
+    private var tabId =""
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         initViews(view!!)
 
-        activity?.let { motoAdpter = MotoAdpter(it) }
+        tabId = arguments?.getString("tabId") ?: ""
+
         initData()
     }
 
@@ -71,7 +78,7 @@ class TabFragment : Fragment() {
             .build()
             .create(Api::class.java)
 
-        val motoList = motobean.getMotoList("")
+        val motoList = motobean.getMotoList(tabId)
 
 
         motoList.enqueue(object : Callback<MotoBean> {
