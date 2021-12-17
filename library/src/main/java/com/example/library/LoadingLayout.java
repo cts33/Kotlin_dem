@@ -8,22 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 
 public class LoadingLayout extends FrameLayout {
     private LoadingView loadingView;
 
-    public LoadingLayout(@NonNull Context context) {
+    public LoadingLayout( Context context) {
         this(context, null);
     }
 
-    public LoadingLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public LoadingLayout( Context context,  AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LoadingLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public LoadingLayout( Context context,  AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initConfig();
