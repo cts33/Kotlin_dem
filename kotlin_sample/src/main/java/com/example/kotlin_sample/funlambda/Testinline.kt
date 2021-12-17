@@ -10,21 +10,21 @@ import java.util.concurrent.locks.Lock
 class Testinline {
 
 }
-inline fun <T> lock(lock: Lock, body: () -> T): T {
-
-    return body
-}
-fun main() {
-
-    lock(l) { foo() }
-
-}
-val body = {
-    l.lock()
-    try {
-        foo()
-    }
-    finally {
-        l.unlock()
-    }
-}
+//inline fun <T> lock(lock: Lock, body: () -> T): T {
+//
+//    return body
+//}
+//fun main() {
+//
+//    lock(l) { foo() }
+//
+//}
+//val body = {
+//    l.lock()
+//    try {
+//        foo()
+//    }
+//    finally {
+//        l.unlock()
+//    }
+//}

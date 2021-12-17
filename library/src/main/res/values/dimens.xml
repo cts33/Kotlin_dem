@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="loadinglayout_test_size_16">16sp</dimen>
+    <dimen name="loadinglayout_dp_0">0dp</dimen>
+    <dimen name="dialog_round">8dp</dimen>
+    <dimen name="btn_round">6dp</dimen>
+    <dimen name="btn_socket_width">1dp</dimen>
+
+    <dimen name="common_dialog_minWidth">480dp</dimen>
+    <dimen name="common_dialog_padding">16dp</dimen>
+    <dimen name="common_dialog_back_width">20dp</dimen>
+    <dimen name="common_dialog_back_height">20dp</dimen>
+    <dimen name="common_dialog_bar_bottom_margin">20dp</dimen>
+    <dimen name="common_dialog_content_top_margin">20dp</dimen>
+    <dimen name="common_dialog_action_top_margin">20dp</dimen>
+    <dimen name="common_dialog_title_text_size">21sp</dimen>
+    <dimen name="common_dialog_content_text_size">21sp</dimen>
+    <dimen name="common_dialog_content_left_padding">50dp</dimen>
+    <dimen name="common_dialog_content_right_padding">50dp</dimen>
+    <dimen name="common_dialog_content_action_margin">30dp</dimen>
+</resources>

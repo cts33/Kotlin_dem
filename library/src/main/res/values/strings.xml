@@ -1,0 +1,9 @@
+<resources>
+    <string name="load_empty">没有加载到数据</string>
+    <string name="loading">加载中..</string>
+    <string name="load_failed">加载失败</string>
+    <string name="load_failed_retry">加载失败,请点击重试</string>
+    <string name="loadview_is_null">loadingview is null!</string>
+    <string name="curr_location">当前位置</string>
+
+</resources>

@@ -2,3 +2,4 @@ rootProject.name = "Kotlin_dem"
 include ':app'
 //include ':test'
 include ':kotlin_sample'
+include ':library'
