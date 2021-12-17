@@ -3,16 +3,19 @@ package com.lll.kotlin_dem.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.library.LoadingLayout
 import com.google.android.material.tabs.TabLayout
-import com.lll.kotlin_dem.bean.MotoBean
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lll.kotlin_dem.R
+import com.lll.kotlin_dem.TabFragment
+import com.lll.kotlin_dem.adapter.MotoAdpter
+import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.moto.Api
 import com.lll.kotlin_dem.moto.Constants
-import com.lll.kotlin_dem.adapter.MotoAdpter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,54 +26,43 @@ class MainActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
     lateinit var motoAdpter: MotoAdpter;
     private lateinit var viewpager2: ViewPager2
-    private lateinit var tabs: TabLayout
+    private lateinit var tablayout: TabLayout
+    private lateinit var loadingLayout: LoadingLayout
 
     private fun initViews() {
-        tabs = findViewById(R.id.tabs)
+        tablayout = findViewById(R.id.tablayout)
         viewpager2 = findViewById(R.id.viewpager2)
+        loadingLayout = findViewById(R.id.loadingLayout)
+
+        viewpager2.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int): Fragment {
+                var tabId = Constants.tabs[position].tabId
+                return TabFragment.create(tabId!!)
+            }
+
+            override fun getItemCount(): Int {
+                return Constants.tabs.size
+            }
+        }
+
+        TabLayoutMediator(tablayout, viewpager2) { tab, position ->
+            tab.text = Constants.tabs[position].name
+        }.attach()
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
+        loadingLayout.showLoading()
 
-//        recycler = findViewById<RecyclerView>(R.id.recycler)
-//
-//
-//        recycler.layoutManager = LinearLayoutManager(this)
-//        motoAdpter = MotoAdpter(this)
-//        recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-//        recycler.adapter = motoAdpter
-//
-//
-//        initData()
     }
 
-    private fun initData() {
 
-        var motobean: Api = Retrofit.Builder()
-            .baseUrl(Constants.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(Api::class.java)
+    fun showFragment() {
 
-        val motoList = motobean.getMotoList("")
-        motoList.enqueue(object : Callback<MotoBean> {
-            override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
-                val body = response.body()
-
-                motoAdpter.setListData(body!!.data!!)
-
-            }
-
-            override fun onFailure(call: Call<MotoBean>, t: Throwable) {
-
-
-            }
-        }
-
-        )
-
+        loadingLayout.showLoadSuccess()
     }
 }

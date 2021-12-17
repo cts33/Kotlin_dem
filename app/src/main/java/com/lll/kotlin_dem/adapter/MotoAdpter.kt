@@ -20,9 +20,7 @@ class MotoAdpter(private val mContext: Context) : RecyclerView.Adapter<MotoAdpte
 
     fun setListData(list: List<DataItem>) {
 
-        if (list == null) {
-            return
-        }
+
         mDatas.addAll(list)
         notifyDataSetChanged()
     }
@@ -46,6 +44,7 @@ class MotoAdpter(private val mContext: Context) : RecyclerView.Adapter<MotoAdpte
             viewHolder.title.text = this.brandName + "   " + this.goodName
 
             Log.d(TAG, "onBindViewHolder:goodPic: " + this.goodPic)
+
             Glide.with(mContext).load(this.goodPic).into(viewHolder.img)
 
             viewHolder.itemView.setOnClickListener {
