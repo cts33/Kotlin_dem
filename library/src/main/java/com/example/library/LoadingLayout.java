@@ -3,12 +3,13 @@ package com.example.library;
 import static com.example.library.ILoadingView.*;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 public class LoadingLayout extends FrameLayout {

@@ -1,11 +1,13 @@
 package com.lll.kotlin_dem.ui
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.moto.Api
@@ -20,20 +22,29 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
     lateinit var motoAdpter: MotoAdpter;
+    private lateinit var viewpager2: ViewPager2
+    private lateinit var tabs: TabLayout
+
+    private fun initViews() {
+        tabs = findViewById(R.id.tabs)
+        viewpager2 = findViewById(R.id.viewpager2)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initViews()
 
-        recycler = findViewById<RecyclerView>(R.id.recycler)
-
-        
-        recycler.layoutManager = LinearLayoutManager(this)
-        motoAdpter = MotoAdpter(this)
-        recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        recycler.adapter = motoAdpter
-
-
-        initData()
+//        recycler = findViewById<RecyclerView>(R.id.recycler)
+//
+//
+//        recycler.layoutManager = LinearLayoutManager(this)
+//        motoAdpter = MotoAdpter(this)
+//        recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//        recycler.adapter = motoAdpter
+//
+//
+//        initData()
     }
 
     private fun initData() {

@@ -2,20 +2,20 @@ package com.lll.kotlin_dem.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.Adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.GridView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.lll.kotlin_dem.bean.DataItem
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiBean
-import com.lll.kotlin_dem.bean.MotoImg
 
-class KoubeiListAdpter(private val mContext: Context) : Adapter<KoubeiListAdpter.MyViewHolder>() {
+class KoubeiListAdpter(private val mContext: Context) : RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
 
     var mDatas: ArrayList<KouBeiBean.KouBeiDataItem> = ArrayList()
 
