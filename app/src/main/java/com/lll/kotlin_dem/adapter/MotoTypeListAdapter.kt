@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lll.kotlin_dem.bean.DataItem
 import com.lll.kotlin_dem.R
-import com.lll.kotlin_dem.ui.KoubeiActivity
+import com.lll.kotlin_dem.moto.Constants
+import com.lll.kotlin_dem.ui.KoubeiListActivity
 
-class MotoAdpter(private val mContext: Context) : RecyclerView.Adapter<MotoAdpter.MyViewHolder>() {
+class MotoTypeListAdapter(private val mContext: Context) : RecyclerView.Adapter<MotoTypeListAdapter.MyViewHolder>() {
 
     var mDatas: ArrayList<DataItem> = ArrayList()
 
@@ -49,10 +50,9 @@ class MotoAdpter(private val mContext: Context) : RecyclerView.Adapter<MotoAdpte
 
             viewHolder.itemView.setOnClickListener {
 
-                val intent = Intent(mContext, KoubeiActivity::class.java)
-                intent.putExtra("uid", this.goodId)
+                val intent = Intent(mContext, KoubeiListActivity::class.java)
+                intent.putExtra(Constants.uid, this.goodId)
                 mContext.startActivity(intent)
-
             }
         }
 

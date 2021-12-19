@@ -12,19 +12,12 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.TabFragment
-import com.lll.kotlin_dem.adapter.MotoAdpter
-import com.lll.kotlin_dem.bean.MotoBean
-import com.lll.kotlin_dem.moto.Api
+import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
 import com.lll.kotlin_dem.moto.Constants
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
-    lateinit var motoAdpter: MotoAdpter;
+    lateinit var motoTypeListAdapter: MotoTypeListAdapter;
     private lateinit var viewpager2: ViewPager2
     private lateinit var tablayout: TabLayout
     private lateinit var loadingLayout: LoadingLayout

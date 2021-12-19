@@ -13,19 +13,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lll.kotlin_dem.R
-import com.lll.kotlin_dem.bean.KouBeiBean
+import com.lll.kotlin_dem.bean.KouBeiDataItem
 
-class KoubeiListAdpter(private val mContext: Context) : RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
+class KoubeiListAdpter(private val mContext: Context) :
+    RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
 
-    var mDatas: ArrayList<KouBeiBean.KouBeiDataItem> = ArrayList()
+    var mDatas: ArrayList<KouBeiDataItem> = ArrayList()
 
-    fun setListData(list: List<KouBeiBean.KouBeiDataItem>) {
-
-        if (list == null) {
-            return
+    fun setListData(list: List<KouBeiDataItem>?) {
+        list?.let {
+            mDatas.addAll(list)
+            notifyDataSetChanged()
         }
-        mDatas.addAll(list)
-        notifyDataSetChanged()
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -51,8 +50,6 @@ class KoubeiListAdpter(private val mContext: Context) : RecyclerView.Adapter<Kou
         val listItem = mDatas[pos]
 
         viewHolder.content.text = listItem.satisfaction + "   --" + listItem.createTime
-
-
         Log.d(TAG, "onBindViewHolder:goodPic: " + this.mDatas.size)
         viewHolder.gridview.adapter = object : BaseAdapter() {
             override fun getCount(): Int {
@@ -77,8 +74,6 @@ class KoubeiListAdpter(private val mContext: Context) : RecyclerView.Adapter<Kou
                 val imgUrl = listItem.images[position].imgOrgUrl
                 Log.d(TAG, "getView: $imgUrl")
                 Glide.with(mContext).load(imgUrl).into(img)
-
-
                 return convertView
             }
 

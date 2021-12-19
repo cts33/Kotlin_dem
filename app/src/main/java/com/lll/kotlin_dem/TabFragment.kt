@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lll.kotlin_dem.adapter.MotoAdpter
+import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
 import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.moto.Api
 import com.lll.kotlin_dem.moto.Constants
+import com.lll.kotlin_dem.moto.Constants.typeId
 import com.lll.kotlin_dem.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,13 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @date 2021/12/17
  */
 class TabFragment : Fragment() {
-    private lateinit var motoAdpter: MotoAdpter
+    private lateinit var motoTypeListAdapter: MotoTypeListAdapter
 
     companion object {
         fun create(tabId: String): TabFragment {
             val tabFragment = TabFragment()
             val bundle = Bundle()
-            bundle.putString("tabId", tabId)
+            bundle.putString(typeId, tabId)
             tabFragment.arguments = bundle
 
             return tabFragment
@@ -46,8 +49,9 @@ class TabFragment : Fragment() {
         recyclerview = view.findViewById(R.id.recyclerview)
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
-        motoAdpter = MotoAdpter(activity!!)
-        recyclerview.adapter = motoAdpter
+        recyclerview.addItemDecoration(DividerItemDecoration(activity,VERTICAL))
+        motoTypeListAdapter = MotoTypeListAdapter(activity!!)
+        recyclerview.adapter = motoTypeListAdapter
     }
 
     override fun onCreateView(
@@ -65,7 +69,7 @@ class TabFragment : Fragment() {
 
         initViews(view!!)
 
-        tabId = arguments?.getString("tabId") ?: ""
+        tabId = arguments?.getString(typeId) ?: ""
 
         initData()
     }
@@ -86,7 +90,7 @@ class TabFragment : Fragment() {
                 val body = response.body()
 
                 Log.d(TAG, "onResponse: "+body)
-                motoAdpter.setListData(body!!.data!!)
+                motoTypeListAdapter.setListData(body!!.data!!)
 
                 (activity as MainActivity).showFragment()
 

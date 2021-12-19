@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Kotlin_dem"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.KoubeiActivity"
+            android:name=".ui.KoubeiListActivity"
             android:exported="false" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
