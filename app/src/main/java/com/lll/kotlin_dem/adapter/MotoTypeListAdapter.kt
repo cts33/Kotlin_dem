@@ -16,12 +16,8 @@ import com.lll.kotlin_dem.moto.Constants
 import com.lll.kotlin_dem.ui.KoubeiListActivity
 
 class MotoTypeListAdapter(private val mContext: Context) : RecyclerView.Adapter<MotoTypeListAdapter.MyViewHolder>() {
-
     var mDatas: ArrayList<DataItem> = ArrayList()
-
     fun setListData(list: List<DataItem>) {
-
-
         mDatas.addAll(list)
         notifyDataSetChanged()
     }
@@ -55,14 +51,11 @@ class MotoTypeListAdapter(private val mContext: Context) : RecyclerView.Adapter<
                 mContext.startActivity(intent)
             }
         }
-
-
     }
 
     val TAG = "MotoAdpter"
 
     override fun getItemCount(): Int {
-
         return mDatas.size
     }
 }
