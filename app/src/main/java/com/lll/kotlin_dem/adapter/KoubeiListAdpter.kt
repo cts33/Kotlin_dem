@@ -5,11 +5,11 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.utils.DateUtil
+import com.lll.kotlin_dem.utils.ScreenUtil
 
 class KoubeiListAdpter(private val mContext: Context) :
     RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
@@ -34,7 +35,8 @@ class KoubeiListAdpter(private val mContext: Context) :
 
         var user_img: ImageView = view.findViewById(R.id.user_img)
         var name: TextView = view.findViewById(R.id.name)
-        var create_time: TextView = view.findViewById(R.id.create_time)
+
+        //        var create_time: TextView = view.findViewById(R.id.create_time)
         var advantage: TextView = view.findViewById(R.id.advantage)
         var shortcoming: TextView = view.findViewById(R.id.shortcoming)
         var gridview: GridView = view.findViewById(R.id.gridview)
@@ -60,45 +62,88 @@ class KoubeiListAdpter(private val mContext: Context) :
             .into(viewHolder.user_img)
         viewHolder.advantage.text = "优点：" + listItem.satisfaction
         viewHolder.shortcoming.text = "缺点：" + listItem.notSatisfied
-        val sex = if(listItem.userInfo.gender==1){ "男"}else{"女"}
-        viewHolder.name.text = listItem.userInfo.auther+"  "+sex+"\n"+"创建时间："+DateUtil.formatDate(listItem.createTime)
+        val sex = if (listItem.userInfo.gender == 1) {
+            "男"
+        } else {
+            "女"
+        }
+
+        listItem.images.apply {
+            if (size == 0) viewHolder.gridview.visibility = GONE
+            else {
+                viewHolder.gridview.visibility = VISIBLE
+            }
+        }
+
+        viewHolder.name.text =
+            listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
 //        viewHolder.create_time.text =
+        viewHolder.gridview.apply {
+            numColumns = getcolumnWidth(listItem.images.size)
+            layoutParams = getRelativeLayoutParams(listItem.images.size)
 
-        viewHolder.gridview.adapter = object : BaseAdapter() {
-            override fun getCount(): Int {
-                return listItem.images.size
-            }
+            adapter = object : BaseAdapter() {
+                override fun getCount(): Int {
+                    return listItem.images.size
+                }
 
-            override fun getItem(position: Int): Any {
+                override fun getItem(position: Int): Any {
 
-                return listItem.images[pos]
-            }
+                    return listItem.images[pos]
+                }
 
-            override fun getItemId(position: Int): Long {
-                return position.toLong()
-            }
+                override fun getItemId(position: Int): Long {
+                    return position.toLong()
+                }
 
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
-                val convertView =
-                    LayoutInflater.from(mContext).inflate(R.layout.imags_list_item, null)
+                    val convertView =
+                        LayoutInflater.from(mContext).inflate(R.layout.imags_list_item, null)
 
-                val img = convertView as ImageView
-                val imgUrl = listItem.images[position].imgOrgUrl
-                Log.d(TAG, "getView: $imgUrl")
-                Glide.with(mContext).load(imgUrl).into(img)
-                return convertView
+                    val img = convertView as ImageView
+                    val imgUrl = listItem.images[position].imgOrgUrl
+                    Glide.with(mContext).load(imgUrl).into(img)
+                    return convertView
+                }
+
             }
 
         }
 
-
+        fun getItemCount(): Int {
+            return mDatas.size
+        }
     }
 
-    val TAG = "MotoAdpter"
+    private fun getRelativeLayoutParams(size: Int): ViewGroup.LayoutParams? {
+
+        return RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            getGridHeight(size, mContext)
+
+        ).apply {
+            addRule(RelativeLayout.BELOW, R.id.shortcoming)
+        }
+    }
 
     override fun getItemCount(): Int {
-
         return mDatas.size
     }
 }
+
+private fun GridView.getcolumnWidth(size: Int): Int {
+    if (size < 3) {
+        return size
+    } else {
+        return 3
+    }
+}
+
+private const val TAG = "KoubeiListAdpter"
+private fun getGridHeight(size: Int, mContext: Context): Int {
+    val width = ScreenUtil.getScreenWidth(mContext)
+    Log.d(TAG, "getGridHeight: =${width * (size % 3 + 1)}")
+    return width * (size % 3 + 1)
+}
+
