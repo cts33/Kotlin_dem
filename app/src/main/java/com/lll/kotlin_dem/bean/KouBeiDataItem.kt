@@ -15,7 +15,9 @@ data class KouBeiDataItem(
     val id: Int,
     val score: String,
     val satisfaction: String,
+    val notSatisfied: String,
     val purchaseDate: String,
     val purchaseCity: String,
+    val userInfo: UserInfo,
     val images: Array<MotoImg>
 )

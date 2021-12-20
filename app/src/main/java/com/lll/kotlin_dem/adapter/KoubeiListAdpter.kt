@@ -12,8 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiDataItem
+import com.lll.kotlin_dem.utils.DateUtil
 
 class KoubeiListAdpter(private val mContext: Context) :
     RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
@@ -29,16 +32,19 @@ class KoubeiListAdpter(private val mContext: Context) :
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var content: TextView = view.findViewById(R.id.content)
-
+        var user_img: ImageView = view.findViewById(R.id.user_img)
+        var name: TextView = view.findViewById(R.id.name)
+        var create_time: TextView = view.findViewById(R.id.create_time)
+        var advantage: TextView = view.findViewById(R.id.advantage)
+        var shortcoming: TextView = view.findViewById(R.id.shortcoming)
         var gridview: GridView = view.findViewById(R.id.gridview)
 
     }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyViewHolder {
 
         return MyViewHolder(
-            LayoutInflater.from(mContext).inflate(R.layout.koubei_list_item, p0, false)
+            LayoutInflater.from(mContext).inflate(R.layout.koubei_list_item, parent, false)
         )
     }
 
@@ -49,8 +55,15 @@ class KoubeiListAdpter(private val mContext: Context) :
 
         val listItem = mDatas[pos]
 
-        viewHolder.content.text = listItem.satisfaction + "   --" + listItem.createTime
-        Log.d(TAG, "onBindViewHolder:goodPic: " + this.mDatas.size)
+        Glide.with(mContext).load(listItem.userInfo.autherimg)
+            .apply(RequestOptions.bitmapTransform(CircleCrop()))
+            .into(viewHolder.user_img)
+        viewHolder.advantage.text = "优点：" + listItem.satisfaction
+        viewHolder.shortcoming.text = "缺点：" + listItem.notSatisfied
+        val sex = if(listItem.userInfo.gender==1){ "男"}else{"女"}
+        viewHolder.name.text = listItem.userInfo.auther+"  "+sex+"\n"+"创建时间："+DateUtil.formatDate(listItem.createTime)
+//        viewHolder.create_time.text =
+
         viewHolder.gridview.adapter = object : BaseAdapter() {
             override fun getCount(): Int {
                 return listItem.images.size
