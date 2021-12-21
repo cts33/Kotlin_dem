@@ -79,7 +79,7 @@ class MotoTypeListAdapter(private val mContext: Context) :
         val layoutParams = textView.layoutParams
         layoutParams.width = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
-            30f,
+            20f,
             textView.context.resources.displayMetrics
         ).toInt() //必须明确 TextView的宽度（注意：实际宽度跟所在布局有关系）
         textView.layoutParams = layoutParams

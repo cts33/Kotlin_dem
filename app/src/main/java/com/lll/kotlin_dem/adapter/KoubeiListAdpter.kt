@@ -68,45 +68,41 @@ class KoubeiListAdpter(private val mContext: Context) :
             "女"
         }
 
-        listItem.images.apply {
-            if (size == 0) viewHolder.gridview.visibility = GONE
-            else {
-                viewHolder.gridview.visibility = VISIBLE
-            }
-        }
-
         viewHolder.name.text =
             listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
-//        viewHolder.create_time.text =
-        viewHolder.gridview.apply {
-            numColumns = getcolumnWidth(listItem.images.size)
-            layoutParams = getRelativeLayoutParams(listItem.images.size)
 
-            adapter = object : BaseAdapter() {
-                override fun getCount(): Int {
-                    return listItem.images.size
-                }
 
-                override fun getItem(position: Int): Any {
+        var layoutParams = viewHolder.gridview.layoutParams
+        layoutParams = getRelativeLayoutParams(listItem.images.size)
+        viewHolder.gridview.layoutParams = layoutParams
 
-                    return listItem.images[pos]
-                }
 
-                override fun getItemId(position: Int): Long {
-                    return position.toLong()
-                }
 
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
-                    val convertView =
-                        LayoutInflater.from(mContext).inflate(R.layout.imags_list_item, null)
+        viewHolder.gridview.adapter = object : BaseAdapter() {
+            override fun getCount(): Int {
+                return listItem.images.size
+            }
 
-                    val img = convertView as ImageView
-                    val imgUrl = listItem.images[position].imgOrgUrl
-                    Glide.with(mContext).load(imgUrl).into(img)
-                    return convertView
-                }
+            override fun getItem(position: Int): Any {
 
+                return listItem.images[pos]
+            }
+
+            override fun getItemId(position: Int): Long {
+                return position.toLong()
+            }
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+
+                val convertView =
+                    LayoutInflater.from(mContext).inflate(R.layout.imags_list_item, null)
+
+                val img = convertView as ImageView
+                val imgUrl = listItem.images[position].imgOrgUrl
+                Log.d(TAG, "getView: $imgUrl")
+                Glide.with(mContext).load(imgUrl).into(img)
+                return convertView
             }
 
         }
@@ -132,18 +128,21 @@ class KoubeiListAdpter(private val mContext: Context) :
     }
 }
 
-private fun GridView.getcolumnWidth(size: Int): Int {
-    if (size < 3) {
-        return size
-    } else {
-        return 3
-    }
-}
 
 private const val TAG = "KoubeiListAdpter"
+
 private fun getGridHeight(size: Int, mContext: Context): Int {
-    val width = ScreenUtil.getScreenWidth(mContext)
-    Log.d(TAG, "getGridHeight: =${width * (size % 3 + 1)}")
-    return width * (size % 3 + 1)
+    val itemHeight = ScreenUtil.getScreenWidth(mContext) / 3
+    var height = 0
+    if (size % 3 == 0) {
+        height = itemHeight * (size / 3)
+    } else if (size > 3) {
+        height = (size / 3 + 1) * itemHeight
+    } else {
+        height = itemHeight
+    }
+
+    Log.d(TAG, "getGridHeight:height=${height} size=${size}")
+    return height
 }
 
