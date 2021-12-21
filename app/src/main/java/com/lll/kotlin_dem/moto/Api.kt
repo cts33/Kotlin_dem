@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface Api {
 
 
-    @GET("carport/goods/rank/hot/list?rows=-1")
+    @GET("carport/goods/rank/grade/list?rows=-1")
     fun getMotoList(@Query("goodType")  type:String): Call<MotoBean>
 
     @GET("carport/goods/praise/score/list/{uid}?limit=20&carId=")

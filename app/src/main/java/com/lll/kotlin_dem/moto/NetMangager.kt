@@ -1,6 +1,7 @@
 package com.lll.kotlin_dem.moto
 
 import com.lll.kotlin_dem.LogInterceptor
+import com.lll.kotlin_dem.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

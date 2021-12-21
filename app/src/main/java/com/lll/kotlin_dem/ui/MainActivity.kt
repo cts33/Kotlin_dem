@@ -2,6 +2,13 @@ package com.lll.kotlin_dem.ui
 
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.RelativeSizeSpan
+import android.util.Log
+import android.util.TypedValue
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +18,8 @@ import com.example.library.LoadingLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lll.kotlin_dem.R
-import com.lll.kotlin_dem.TabFragment
 import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
-import com.lll.kotlin_dem.moto.Constants
+import com.lll.kotlin_dem.utils.Constants
 
 class MainActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
@@ -41,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(tablayout, viewpager2) { tab, position ->
             tab.text = Constants.tabs[position].name
         }.attach()
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,4 +62,6 @@ class MainActivity : AppCompatActivity() {
 
         loadingLayout.showLoadSuccess()
     }
+
+
 }

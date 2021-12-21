@@ -12,7 +12,7 @@ import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.KoubeiListAdpter
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.ResponseResult
-import com.lll.kotlin_dem.moto.Constants.uid
+import com.lll.kotlin_dem.utils.Constants.uid
 import com.lll.kotlin_dem.moto.NetMangager
 import retrofit2.Call
 import retrofit2.Callback

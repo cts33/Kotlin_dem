@@ -1,4 +1,4 @@
-package com.lll.kotlin_dem
+package com.lll.kotlin_dem.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
 import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.moto.Api
-import com.lll.kotlin_dem.moto.Constants
-import com.lll.kotlin_dem.moto.Constants.typeId
-import com.lll.kotlin_dem.ui.MainActivity
+import com.lll.kotlin_dem.utils.Constants
+import com.lll.kotlin_dem.utils.Constants.typeId
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,10 +36,8 @@ class TabFragment : Fragment() {
             val bundle = Bundle()
             bundle.putString(typeId, tabId)
             tabFragment.arguments = bundle
-
             return tabFragment
         }
-
     }
 
 
@@ -49,7 +47,7 @@ class TabFragment : Fragment() {
         recyclerview = view.findViewById(R.id.recyclerview)
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
-        recyclerview.addItemDecoration(DividerItemDecoration(activity,VERTICAL))
+        recyclerview.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
         motoTypeListAdapter = MotoTypeListAdapter(activity!!)
         recyclerview.adapter = motoTypeListAdapter
     }
@@ -63,7 +61,7 @@ class TabFragment : Fragment() {
         return View.inflate(activity, R.layout.tab_fragment, null)
     }
 
-    private var tabId =""
+    private var tabId = ""
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -83,31 +81,24 @@ class TabFragment : Fragment() {
             .create(Api::class.java)
 
         val motoList = motobean.getMotoList(tabId)
-
-
         motoList.enqueue(object : Callback<MotoBean> {
             override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
                 val body = response.body()
-
-                Log.d(TAG, "onResponse: "+body)
+                Log.d(TAG, "onResponse: " + body)
                 motoTypeListAdapter.setListData(body!!.data!!)
 
                 (activity as MainActivity).showFragment()
-
             }
 
             override fun onFailure(call: Call<MotoBean>, t: Throwable) {
-
-                Log.d(TAG, "onFailure: "+t.message)
-
+                Log.d(TAG, "onFailure: " + t.message)
             }
         }
-
         )
 
     }
 
-    private  val TAG = "TabFragment"
+    private val TAG = "TabFragment"
 
 
 }
