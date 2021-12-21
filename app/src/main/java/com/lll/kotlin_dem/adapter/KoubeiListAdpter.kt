@@ -24,6 +24,7 @@ class KoubeiListAdpter(private val mContext: Context) :
 
     var mDatas: ArrayList<KouBeiDataItem> = ArrayList()
 
+    val heightMap = HashMap<Int, Int>()
     fun setListData(list: List<KouBeiDataItem>?) {
         list?.let {
             mDatas.addAll(list)
@@ -72,13 +73,6 @@ class KoubeiListAdpter(private val mContext: Context) :
             listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
 
 
-        var layoutParams = viewHolder.gridview.layoutParams
-        layoutParams = getRelativeLayoutParams(listItem.images.size)
-        viewHolder.gridview.layoutParams = layoutParams
-
-
-
-
         viewHolder.gridview.adapter = object : BaseAdapter() {
             override fun getCount(): Int {
                 return listItem.images.size
@@ -106,17 +100,26 @@ class KoubeiListAdpter(private val mContext: Context) :
             }
 
         }
+        var layoutParams = viewHolder.gridview.layoutParams
+        val height = heightMap[pos]
+        if (height == null) {
+            heightMap[pos] = getGridHeight(listItem.images.size, mContext)
+        }
+
+        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
+        viewHolder.gridview.layoutParams = layoutParams
+
 
         fun getItemCount(): Int {
             return mDatas.size
         }
     }
 
-    private fun getRelativeLayoutParams(size: Int): ViewGroup.LayoutParams? {
+    private fun getRelativeLayoutParams(height: Int): ViewGroup.LayoutParams? {
 
         return RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.MATCH_PARENT,
-            getGridHeight(size, mContext)
+            height
 
         ).apply {
             addRule(RelativeLayout.BELOW, R.id.shortcoming)
