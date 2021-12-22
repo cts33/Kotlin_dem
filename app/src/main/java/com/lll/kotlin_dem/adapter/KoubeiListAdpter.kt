@@ -34,23 +34,13 @@ class KoubeiListAdpter(private val mContext: Context) :
     }
 
     class MyViewHolder(
-        view: View
-    ) : RecyclerView.ViewHolder(view) {
-        var user_img: ImageView
-        var name: TextView
-        var advantage: TextView
-        var shortcoming: TextView
-        var myGridView: MyGridView
-
-        init {
-            user_img = view.findViewById(R.id.user_img)
-            name = view.findViewById(R.id.name)
-
-            //        var create_time: TextView = view.findViewById(R.id.create_time)
-            advantage = view.findViewById(R.id.advantage)
-            shortcoming = view.findViewById(R.id.shortcoming)
-            myGridView = view.findViewById(R.id.mygridview)
-        }
+        val itemView: View
+    ) : RecyclerView.ViewHolder(itemView) {
+        var userImg: ImageView = itemView.findViewById(R.id.user_img)
+        var name: TextView = itemView.findViewById(R.id.name)
+        var advantage: TextView = itemView.findViewById(R.id.advantage)
+        var shortcoming: TextView = itemView.findViewById(R.id.shortcoming)
+        var myGridView: MyGridView = itemView.findViewById(R.id.mygridview)
 
 
     }
@@ -69,7 +59,7 @@ class KoubeiListAdpter(private val mContext: Context) :
 
         Glide.with(mContext).load(listItem.userInfo.autherimg)
             .apply(RequestOptions.bitmapTransform(CircleCrop()))
-            .into(viewHolder.user_img)
+            .into(viewHolder.userImg)
         viewHolder.advantage.text = "优点：" + listItem.satisfaction
         viewHolder.shortcoming.text = "缺点：" + listItem.notSatisfied
         val sex = if (listItem.userInfo.gender == 1) {
@@ -91,7 +81,7 @@ class KoubeiListAdpter(private val mContext: Context) :
         viewHolder.myGridView.layoutParams = layoutParams
 
         viewHolder.myGridView.adapter = ImageAdapter(mContext, listItem.images.toList())
-        viewHolder.setIsRecyclable(false);//false - 禁止复用 true-可以复用
+//        viewHolder.setIsRecyclable(false);//false - 禁止复用 true-可以复用
 
     }
 

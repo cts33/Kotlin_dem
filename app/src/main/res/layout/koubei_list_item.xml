@@ -51,11 +51,14 @@
     <com.lll.kotlin_dem.view.MyGridView
         android:id="@+id/mygridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:verticalSpacing="3dp"
         android:horizontalSpacing="3dp"
-        android:layout_below="@+id/shortcoming"
+        android:layout_below="@id/shortcoming"
         android:layout_marginBottom="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:numColumns="3" />
 
 </RelativeLayout>

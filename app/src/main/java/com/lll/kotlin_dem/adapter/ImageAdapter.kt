@@ -9,6 +9,8 @@ import com.lll.kotlin_dem.bean.MotoImg
 
 class ImageAdapter(private val context: Context, dataList: List<MotoImg>) :
     ImageBaseAdapter<MotoImg>(context, dataList) {
+
+
     override fun bindData(baseViewHolder: BaseViewHolder, moto: MotoImg) {
 
         val imageView = baseViewHolder.getViewById(R.id.image)

@@ -37,7 +37,7 @@ abstract class ImageBaseAdapter<T>(private val context: Context, private val dat
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
 
-        var baseViewHolder: BaseViewHolder? = BaseViewHolder(context)
+        var baseViewHolder: BaseViewHolder? = BaseViewHolder()
         if (baseViewHolder?.convertView == null) {
 
             baseViewHolder?.convertView =
@@ -46,6 +46,7 @@ abstract class ImageBaseAdapter<T>(private val context: Context, private val dat
 
         bindData(baseViewHolder!!, dataList[position])
 
+        Log.d(TAG, "getView: pos="+position+"  converView="+baseViewHolder.convertView)
 
         return baseViewHolder?.convertView!!
     }
@@ -56,7 +57,7 @@ abstract class ImageBaseAdapter<T>(private val context: Context, private val dat
     abstract fun getLayout(): Int
 
 
-    class BaseViewHolder(val context: Context) {
+    class BaseViewHolder() {
 
         private val viewList = SparseArray<View>()
         var convertView: View? = null
