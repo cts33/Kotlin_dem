@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val redPoint = findViewById<RedPoint>(R.id.red_point)
-        redPoint.setText("口口口")
+        redPoint.setText("88")
 
     }
 }

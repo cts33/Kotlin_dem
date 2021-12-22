@@ -12,7 +12,7 @@ class ImageAdapter(private val context: Context, dataList: List<MotoImg>) :
     override fun bindData(baseViewHolder: BaseViewHolder, moto: MotoImg) {
 
         val imageView = baseViewHolder.getViewById(R.id.image)
-        Log.d("", "bindData: "+moto.imgOrgUrl)
+        Log.d("", "bindData: " + moto.imgOrgUrl)
 
         Glide.with(context).load(moto.imgOrgUrl).into(imageView as ImageView)
     }

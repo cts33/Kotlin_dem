@@ -48,8 +48,8 @@
         android:layout_below="@+id/advantage"
         android:paddingBottom="20dp" />
 
-    <GridView
-        android:id="@+id/gridview"
+    <com.lll.kotlin_dem.view.MyGridView
+        android:id="@+id/mygridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:verticalSpacing="3dp"

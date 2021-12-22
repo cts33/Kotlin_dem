@@ -18,6 +18,7 @@ import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.utils.DateUtil
 import com.lll.kotlin_dem.utils.ScreenUtil
+import com.lll.kotlin_dem.view.MyGridView
 
 class KoubeiListAdpter(private val mContext: Context) :
     RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
@@ -32,23 +33,31 @@ class KoubeiListAdpter(private val mContext: Context) :
         }
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(
+        view: View
+    ) : RecyclerView.ViewHolder(view) {
+        var user_img: ImageView
+        var name: TextView
+        var advantage: TextView
+        var shortcoming: TextView
+        var myGridView: MyGridView
 
-        var user_img: ImageView = view.findViewById(R.id.user_img)
-        var name: TextView = view.findViewById(R.id.name)
+        init {
+            user_img = view.findViewById(R.id.user_img)
+            name = view.findViewById(R.id.name)
 
-        //        var create_time: TextView = view.findViewById(R.id.create_time)
-        var advantage: TextView = view.findViewById(R.id.advantage)
-        var shortcoming: TextView = view.findViewById(R.id.shortcoming)
-        var gridview: GridView = view.findViewById(R.id.gridview)
+            //        var create_time: TextView = view.findViewById(R.id.create_time)
+            advantage = view.findViewById(R.id.advantage)
+            shortcoming = view.findViewById(R.id.shortcoming)
+            myGridView = view.findViewById(R.id.mygridview)
+        }
+
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyViewHolder {
-
-        return MyViewHolder(
-            LayoutInflater.from(mContext).inflate(R.layout.koubei_list_item, parent, false)
-        )
+        val view = LayoutInflater.from(mContext).inflate(R.layout.koubei_list_item, parent, false)
+        return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(
@@ -73,22 +82,20 @@ class KoubeiListAdpter(private val mContext: Context) :
             listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
 
 
-        var layoutParams = viewHolder.gridview.layoutParams
+        var layoutParams: RelativeLayout.LayoutParams? = null
         val height = heightMap[pos]
         if (height == null) {
             heightMap[pos] = getGridHeight(listItem.images.size, mContext)
         }
         layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
-        viewHolder.gridview.layoutParams = layoutParams
+        viewHolder.myGridView.layoutParams = layoutParams
 
-        viewHolder.gridview.adapter = ImageAdapter(mContext,listItem.images.toList())
+        viewHolder.myGridView.adapter = ImageAdapter(mContext, listItem.images.toList())
+        viewHolder.setIsRecyclable(false);//false - 禁止复用 true-可以复用
 
-        fun getItemCount(): Int {
-            return mDatas.size
-        }
     }
 
-    private fun getRelativeLayoutParams(height: Int): ViewGroup.LayoutParams? {
+    private fun getRelativeLayoutParams(height: Int): RelativeLayout.LayoutParams? {
 
         return RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.MATCH_PARENT,
