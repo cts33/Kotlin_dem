@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp" />
 
 
     </LinearLayout>
@@ -48,17 +48,10 @@
         android:layout_below="@+id/advantage"
         android:paddingBottom="20dp" />
 
-    <com.lll.kotlin_dem.view.MyGridView
-        android:id="@+id/mygridview"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:verticalSpacing="3dp"
-        android:horizontalSpacing="3dp"
-        android:layout_below="@id/shortcoming"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:numColumns="3" />
 
+    <com.example.library.GridViewLayout
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
 </RelativeLayout>

@@ -19,5 +19,5 @@ data class KouBeiDataItem(
     val purchaseDate: String,
     val purchaseCity: String,
     val userInfo: UserInfo,
-    val images: Array<MotoImg>
+    val images: List<MotoImg>
 )

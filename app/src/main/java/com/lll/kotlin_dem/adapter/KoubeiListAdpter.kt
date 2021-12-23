@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.library.GridViewLayout
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiDataItem
+import com.lll.kotlin_dem.bean.MotoImg
 import com.lll.kotlin_dem.utils.DateUtil
 import com.lll.kotlin_dem.utils.ScreenUtil
 import com.lll.kotlin_dem.view.MyGridView
@@ -40,7 +42,7 @@ class KoubeiListAdpter(private val mContext: Context) :
         var name: TextView = itemView.findViewById(R.id.name)
         var advantage: TextView = itemView.findViewById(R.id.advantage)
         var shortcoming: TextView = itemView.findViewById(R.id.shortcoming)
-        var myGridView: MyGridView = itemView.findViewById(R.id.mygridview)
+        var myGridView: GridViewLayout<MotoImg> = itemView.findViewById(R.id.gridview)
 
 
     }
@@ -72,18 +74,21 @@ class KoubeiListAdpter(private val mContext: Context) :
             listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
 
 
-        var layoutParams: RelativeLayout.LayoutParams? = null
-        val height = heightMap[pos]
-        if (height == null) {
-            heightMap[pos] = getGridHeight(listItem.images.size, mContext)
-        }
-        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
-        viewHolder.myGridView.layoutParams = layoutParams
+//        var layoutParams: RelativeLayout.LayoutParams? = null
+//        val height = heightMap[pos]
+//        if (height == null) {
+//            heightMap[pos] = getGridHeight(listItem.images.size, mContext)
+//        }
+//        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
+//        viewHolder.myGridView.layoutParams = layoutParams
 
-        viewHolder.myGridView.adapter = ImageAdapter(mContext, listItem.images.toList())
-//        viewHolder.setIsRecyclable(false);//false - 禁止复用 true-可以复用
+        viewHolder.myGridView.setDataList(listItem.images){ it,image ->
+
+            Glide.with(mContext).load(it.imgOrgUrl).into(image)
+        }
 
     }
+
 
     private fun getRelativeLayoutParams(height: Int): RelativeLayout.LayoutParams? {
 
