@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.library.LoadingLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/loadingLayout"
-    android:orientation="vertical"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/koubei_recycler"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/koubei_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <byc.imagewatcher.ImageWatcher
+            android:id="@+id/image_watcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
 </com.example.library.LoadingLayout>

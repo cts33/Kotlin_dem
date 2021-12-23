@@ -1,6 +1,7 @@
 package com.lll.kotlin_dem.ui
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.library.LoadingLayout
-import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.KoubeiListAdpter
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.ResponseResult
@@ -17,13 +17,31 @@ import com.lll.kotlin_dem.moto.NetMangager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.widget.Toast
+
+import byc.imagewatcher.ImageWatcher
+
+import android.view.View
+import android.widget.ImageView
+import byc.imagewatcher.ImageWatcher.OnStateChangedListener
+import byc.imagewatcher.ImageWatcher.generateViewId
+import com.bumptech.glide.Glide
+import com.lll.kotlin_dem.R
+import android.graphics.drawable.Drawable
+
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+
 
 class KoubeiListActivity : AppCompatActivity() {
 
     private lateinit var koubeiListAdapter: KoubeiListAdpter
     private lateinit var recycler: RecyclerView
     private lateinit var loadingLayout: LoadingLayout
-
+    private var vImageWatcher: ImageWatcher? = null
     lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +49,81 @@ class KoubeiListActivity : AppCompatActivity() {
         context = this;
         recycler = findViewById(R.id.koubei_recycler)
         loadingLayout = findViewById(R.id.loadingLayout)
+        vImageWatcher = findViewById<ImageWatcher>(R.id.image_watcher)
+
 
         recycler.apply {
             layoutManager = LinearLayoutManager(context)
-            koubeiListAdapter = KoubeiListAdpter(context)
+            koubeiListAdapter = KoubeiListAdpter(context,vImageWatcher!!)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = koubeiListAdapter
         }
+
+        // 一般来讲， ImageWatcher 需要占据全屏的位置
+        // 一般来讲， ImageWatcher 需要占据全屏的位置
+
+        // 如果不是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
+        // 如果不是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
+//        vImageWatcher.setTranslucentStatus(if (!isTranslucentStatus) Utils.calcStatusBarHeight(this) else 0)
+        // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
+        // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
+        vImageWatcher!!.setErrorImageRes(R.mipmap.error_picture)
+        // 长按图片的回调，你可以显示一个框继续提供一些复制，发送等功能
+//        vImageWatcher!!.setOnPictureLongPressListener(this)
+        vImageWatcher!!.setLoader(GlideSimpleLoader())
+        vImageWatcher!!.setOnStateChangedListener(object : OnStateChangedListener {
+            override fun onStateChangeUpdate(
+                imageWatcher: ImageWatcher?,
+                clicked: ImageView?,
+                position: Int,
+                uri: Uri,
+                animatedValue: Float,
+                actionTag: Int
+            ) {
+                Log.e("IW", "onStateChangeUpdate [$position][$uri][$animatedValue][$actionTag]")
+            }
+
+            override fun onStateChanged(
+                imageWatcher: ImageWatcher?,
+                position: Int,
+                uri: Uri,
+                actionTag: Int
+            ) {
+                if (actionTag == ImageWatcher.STATE_ENTER_DISPLAYING) {
+                    Toast.makeText(applicationContext, "点击了图片 [$position]$uri", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (actionTag == ImageWatcher.STATE_EXIT_HIDING) {
+                    Toast.makeText(applicationContext, "退出了查看大图", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+
         loadingLayout.showLoading()
         initData()
+    }
+
+    class GlideSimpleLoader : ImageWatcher.Loader {
+        override fun load(context: Context, uri: Uri, lc: ImageWatcher.LoadCallback?) {
+            Glide.with(context).load(uri)
+                .into(object : SimpleTarget<Drawable?>() {
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        @Nullable transition: Transition<in Drawable?>?
+                    ) {
+                        lc!!.onResourceReady(resource)
+                    }
+
+                    override fun onLoadFailed(@Nullable errorDrawable: Drawable?) {
+                        lc!!.onLoadFailed(errorDrawable)
+                    }
+
+                    override fun onLoadStarted(@Nullable placeholder: Drawable?) {
+                        lc!!.onLoadStarted(placeholder)
+                    }
+                })
+        }
+
     }
 
     val TAG = "KoubeiActivity"

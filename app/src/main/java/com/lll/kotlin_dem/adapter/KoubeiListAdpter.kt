@@ -2,15 +2,14 @@ package com.lll.kotlin_dem.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import byc.imagewatcher.ImageWatcher
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -20,14 +19,14 @@ import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.MotoImg
 import com.lll.kotlin_dem.utils.DateUtil
 import com.lll.kotlin_dem.utils.ScreenUtil
-import com.lll.kotlin_dem.view.MyGridView
 
-class KoubeiListAdpter(private val mContext: Context) :
+class KoubeiListAdpter(private val mContext: Context, val vImageWatcher: ImageWatcher) :
     RecyclerView.Adapter<KoubeiListAdpter.MyViewHolder>() {
 
     var mDatas: ArrayList<KouBeiDataItem> = ArrayList()
 
     val heightMap = HashMap<Int, Int>()
+
     fun setListData(list: List<KouBeiDataItem>?) {
         list?.let {
             mDatas.addAll(list)
@@ -82,10 +81,36 @@ class KoubeiListAdpter(private val mContext: Context) :
 //        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
 //        viewHolder.myGridView.layoutParams = layoutParams
 
-        viewHolder.myGridView.setDataList(listItem.images){ it,image ->
+        viewHolder.myGridView.setDataList(listItem.images) { it, image ->
 
             Glide.with(mContext).load(it.imgOrgUrl).into(image)
         }
+        viewHolder.myGridView.setOnItemClickListener(object : GridViewLayout.OnItemClickListener {
+            override fun onItemClick(
+                view: View?,
+                PressImagePosition: Int,
+                PressX: Float,
+                PressY: Float
+            ) {
+                val urlList = arrayListOf<Uri>()
+                for ((index, item) in listItem.images.withIndex()) {
+                    val uri = Uri.parse(item.imgOrgUrl)
+                    urlList.add(uri)
+                }
+
+                vImageWatcher.show(urlList, PressImagePosition)
+            }
+
+            override fun onItemLongClick(
+                view: View?,
+                PressImagePosition: Int,
+                PressX: Float,
+                PressY: Float
+            ) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
     }
 
