@@ -59,14 +59,6 @@ class KoubeiListActivity : AppCompatActivity() {
             adapter = koubeiListAdapter
         }
 
-        // 一般来讲， ImageWatcher 需要占据全屏的位置
-        // 一般来讲， ImageWatcher 需要占据全屏的位置
-
-        // 如果不是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
-        // 如果不是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
-//        vImageWatcher.setTranslucentStatus(if (!isTranslucentStatus) Utils.calcStatusBarHeight(this) else 0)
-        // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
-        // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
         vImageWatcher!!.setErrorImageRes(R.mipmap.error_picture)
         // 长按图片的回调，你可以显示一个框继续提供一些复制，发送等功能
 //        vImageWatcher!!.setOnPictureLongPressListener(this)
@@ -89,12 +81,12 @@ class KoubeiListActivity : AppCompatActivity() {
                 uri: Uri,
                 actionTag: Int
             ) {
-                if (actionTag == ImageWatcher.STATE_ENTER_DISPLAYING) {
-                    Toast.makeText(applicationContext, "点击了图片 [$position]$uri", Toast.LENGTH_SHORT)
-                        .show()
-                } else if (actionTag == ImageWatcher.STATE_EXIT_HIDING) {
-                    Toast.makeText(applicationContext, "退出了查看大图", Toast.LENGTH_SHORT).show()
-                }
+//                if (actionTag == ImageWatcher.STATE_ENTER_DISPLAYING) {
+//                    Toast.makeText(applicationContext, "点击了图片 [$position]$uri", Toast.LENGTH_SHORT)
+//                        .show()
+//                } else if (actionTag == ImageWatcher.STATE_EXIT_HIDING) {
+//                    Toast.makeText(applicationContext, "退出了查看大图", Toast.LENGTH_SHORT).show()
+//                }
             }
         })
 
