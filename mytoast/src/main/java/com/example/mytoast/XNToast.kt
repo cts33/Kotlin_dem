@@ -25,6 +25,9 @@ object XNToast {
 
     private const val MARGIN_EDGE = 50
     private var params: WindowManager.LayoutParams? = null
+    private var isShowing = false
+    private var windowManager: WindowManager? = null
+    private var root: View? = null
 
     /**
      * obj:
@@ -56,11 +59,9 @@ object XNToast {
             title = title.substring(0, 10).plus("...")
         }
 
-
         val duration = obj.optLong("duration")
 
         val mask = obj.optBoolean("mask")
-
 
         show(context, title, drawable, duration)
     }
@@ -89,8 +90,6 @@ object XNToast {
         show(context, text, drawable, duration)
     }
 
-    var windowManager: WindowManager? = null
-    var root: View? = null
 
     /**
      * @param text
@@ -140,8 +139,6 @@ object XNToast {
             duration
         )
     }
-
-    var isShowing = false
 
     private fun getWindowLayoutParams() = WindowManager.LayoutParams().apply {
         type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
