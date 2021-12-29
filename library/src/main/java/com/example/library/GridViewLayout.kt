@@ -2,21 +2,18 @@ package com.example.library
 
 import android.content.Context
 import android.graphics.Color
-import android.widget.LinearLayout
-import android.widget.ImageView.ScaleType
-import android.view.MotionEvent
 import android.graphics.PorterDuff
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import java.util.ArrayList
+import android.widget.ImageView.ScaleType
+import android.widget.LinearLayout
 
 class GridViewLayout<T> : LinearLayout {
     private var mContext: Context
     private var mImageViewcache: ImageView? = null
 
-
-    private val mImageViews: MutableList<ImageView> = ArrayList()
 
     /**
      * 长度 单位为Pixel
@@ -42,6 +39,8 @@ class GridViewLayout<T> : LinearLayout {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         mContext = context
+
+        this.orientation = VERTICAL
     }
 
     lateinit var imageLoader: ((T, ImageView) -> Unit)
@@ -70,13 +69,7 @@ class GridViewLayout<T> : LinearLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         if (MAX_WIDTH == 0) {
-            val width = measureWidth(widthMeasureSpec)
-            if (width > 0) {
-                MAX_WIDTH = width
-                if (dataList?.isNotEmpty()) {
-                    setDataList(dataList!!, this.imageLoader)
-                }
-            }
+            MAX_WIDTH = measureWidth(widthMeasureSpec)
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
@@ -117,13 +110,9 @@ class GridViewLayout<T> : LinearLayout {
 
     // 根据imageView的数量初始化不同的View布局,还要为每一个View作点击效果
     private fun initView() {
-        this.orientation = VERTICAL
+
         removeAllViews()
-        if (MAX_WIDTH == 0) {
-            //为了触发onMeasure()来测量MultiImageView的最大宽度，MultiImageView的宽设置为match_parent
-            addView(View(context))
-            return
-        }
+
         if (dataList.isNullOrEmpty()) {
             return
         }
@@ -136,8 +125,7 @@ class GridViewLayout<T> : LinearLayout {
             } else {
                 3
             }
-            val rowCount =
-                allCount / MAX_PER_COLUMN_COUNT + if (allCount % MAX_PER_COLUMN_COUNT > 0) 1 else 0 // 行数
+            val rowCount =   allCount / MAX_PER_COLUMN_COUNT + if (allCount % MAX_PER_COLUMN_COUNT > 0) 1 else 0 // 行数
             for (rowCursor in 0 until rowCount) {
                 val rowLayout = LinearLayout(context)
                 rowLayout.orientation = HORIZONTAL
@@ -161,6 +149,7 @@ class GridViewLayout<T> : LinearLayout {
         }
     }
 
+    private val TAG = "GridViewLayout"
 
     private fun getImageViewFromCache(
         position: Int,
@@ -177,18 +166,12 @@ class GridViewLayout<T> : LinearLayout {
             mImageViewcache!!.layoutParams = onePicPara
             mImageView = mImageViewcache
         } else {
-            for (i in mImageViews.indices) {
-                if (mImageViews[i].parent == null) {
-                    mImageView = mImageViews[i]
-                    break
-                }
-            }
+
             if (mImageView == null) {
                 mImageView = ImageView(context)
                 mImageView.scaleType = ScaleType.CENTER_CROP
                 mImageView.layoutParams =
                     if (position % MAX_PER_COLUMN_COUNT == 0) moreParaColumnFirst else morePara
-                mImageViews.add(mImageView)
             }
         }
         val PressX = FloatArray(1)
@@ -235,7 +218,6 @@ class GridViewLayout<T> : LinearLayout {
         mImageView.setTag(R.id.FriendLife_Position, position)
 
         this.imageLoader(dataList[position], mImageView)
-//        Glide.with(mContext).load(PicURL).into(mImageView!!)
         return mImageView
     }
 
