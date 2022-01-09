@@ -17,10 +17,17 @@ fun main() {
 //
 //    println("result = $result")
 
-    val sourceList = mutableListOf(1, 2, 3)
-    val copySet = sourceList.toMutableSet()
-    copySet.add(3)
-    copySet.add(4)
-    println(copySet)
+//    val sourceList = mutableListOf(1, 2, 3)
+//    val copySet = sourceList.toMutableSet()
+//    copySet.add(3)
+//    copySet.add(4)
+//    println(copySet)
+
+    val testinline = Testinline()
+    testinline.xxx(33,
+        fun(a: Int): Boolean {
+            return a > 0
+        }
+    )
 }
 

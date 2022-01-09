@@ -1,7 +1,5 @@
 package com.lll.kotlin_dem.bean
 
-import com.google.gson.annotations.SerializedName
-
 data class DataItem(
                     val brandName: String = "",
                     val queryPriceCount: Int = 0,

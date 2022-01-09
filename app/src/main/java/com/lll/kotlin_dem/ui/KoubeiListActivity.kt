@@ -1,39 +1,31 @@
 package com.lll.kotlin_dem.ui
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import byc.imagewatcher.ImageWatcher
+import byc.imagewatcher.ImageWatcher.OnStateChangedListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.library.LoadingLayout
+import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.KoubeiListAdpter
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.ResponseResult
-import com.lll.kotlin_dem.utils.Constants.uid
 import com.lll.kotlin_dem.moto.NetMangager
+import com.lll.kotlin_dem.utils.Constants.uid
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.widget.Toast
-
-import byc.imagewatcher.ImageWatcher
-
-import android.view.View
-import android.widget.ImageView
-import byc.imagewatcher.ImageWatcher.OnStateChangedListener
-import byc.imagewatcher.ImageWatcher.generateViewId
-import com.bumptech.glide.Glide
-import com.lll.kotlin_dem.R
-import android.graphics.drawable.Drawable
-
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 
 
 class KoubeiListActivity : AppCompatActivity() {

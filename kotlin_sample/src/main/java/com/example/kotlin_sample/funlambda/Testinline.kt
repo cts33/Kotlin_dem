@@ -9,6 +9,14 @@ import java.util.concurrent.locks.Lock
  */
 class Testinline {
 
+    fun xxx(x: Int, test: ((Int) -> Boolean)) {
+        if (test(x)) {
+
+            print("this is test")
+        }
+    }
+
+
 }
 //inline fun <T> lock(lock: Lock, body: () -> T): T {
 //
