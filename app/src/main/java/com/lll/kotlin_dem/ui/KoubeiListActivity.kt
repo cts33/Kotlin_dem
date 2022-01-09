@@ -54,7 +54,7 @@ class KoubeiListActivity : AppCompatActivity() {
 
         recycler.apply {
             layoutManager = LinearLayoutManager(context)
-            koubeiListAdapter = KoubeiListAdpter(context,vImageWatcher!!)
+            koubeiListAdapter = KoubeiListAdpter(context, vImageWatcher!!)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = koubeiListAdapter
         }
@@ -144,6 +144,5 @@ class KoubeiListActivity : AppCompatActivity() {
             }
         }
         )
-
     }
 }

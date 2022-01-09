@@ -81,10 +81,12 @@ class KoubeiListAdpter(private val mContext: Context, val vImageWatcher: ImageWa
 //        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
 //        viewHolder.myGridView.layoutParams = layoutParams
 
-        viewHolder.myGridView.setDataList(listItem.images) { it, image ->
+        viewHolder.myGridView.setDataList(listItem.images) { bean, image ->
 
-            Glide.with(mContext).load(it.imgOrgUrl).into(image)
+            Glide.with(mContext).load(bean.imgOrgUrl).into(image)
         }
+
+
         viewHolder.myGridView.setOnItemClickListener(object : GridViewLayout.OnItemClickListener {
             override fun onItemClick(
                 view: View?,
