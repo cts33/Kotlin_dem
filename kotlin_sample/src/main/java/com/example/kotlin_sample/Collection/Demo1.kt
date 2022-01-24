@@ -1,15 +1,6 @@
-package com.example.kotlin_sample
+package com.example.kotlin_sample.Collection
 
-import org.junit.Test
-
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class Demo1 {
 
     val list = emptyList<String>()
     //空集合list
@@ -32,16 +23,4 @@ class ExampleUnitTest {
     //可变map
     val map3 = mutableMapOf<String,String>()
 
-
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-
-        val iterator = map3.iterator()
-        while (iterator.hasNext()){
-            val next = iterator.next()
-
-        }
-
-    }
 }
