@@ -7,7 +7,7 @@ object Constants {
     val typeId: String = "typeId"
     val uid: String = "uid"
     val koubeiId: String = ""
-    val baseUrl: String = " https://api.58moto.com/"
+    val baseUrl: String = "https://api.58moto.com/"
     val tabs = listOf(
         TabTag("全部", ""),
         TabTag("巡航", "4"),

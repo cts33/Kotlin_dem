@@ -1,17 +1,23 @@
 package com.lll.kotlin_dem.bean
 
+/**
+ * Updated by chents on 2022-01-24
+ */
 data class DataItem(
-                    val brandName: String = "",
-                    val queryPriceCount: Int = 0,
-                    val browseCount: Int = 0,
-                    val rankChange: Int = 0,
-                    val discount: String = "",
-                    val goodId: Int = 0,
-                    val saleStatus: Int = 0,
-                    val goodPrice: String = "",
-                    val goodName: String = "",
-                    val brandId: Int = 0,
-                    val grade: Float = 0f,
-                    val minPrice: String = "",
-                    val goodPic: String = "",
-                    val gradeCount: Int = 0)
+    var brandId: Int,
+    var brandName: String,
+    var browseCount: Int,
+    var discount: String,
+    var energyType: String,
+    var goodId: Int,
+    var goodName: String,
+    var goodPic: String,
+    var goodPrice: String,
+    var grade: Double,
+    var gradeCount: Int,
+    var maxPrice: String,
+    var minPrice: String,
+    var queryPriceCount: Int,
+    var rankChange: Int,
+    var saleStatus: Int
+)

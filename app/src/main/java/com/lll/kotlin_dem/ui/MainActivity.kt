@@ -63,5 +63,9 @@ class MainActivity : AppCompatActivity() {
         loadingLayout.showLoadSuccess()
     }
 
+    fun showFailed() {
+
+        loadingLayout.showLoadFailed()
+    }
 
 }

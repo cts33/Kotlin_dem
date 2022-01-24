@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
-import com.lll.kotlin_dem.bean.MotoBean
 import com.lll.kotlin_dem.moto.Api
 import com.lll.kotlin_dem.utils.Constants
 import com.lll.kotlin_dem.utils.Constants.typeId
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -74,27 +74,41 @@ class TabFragment : Fragment() {
 
     private fun initData() {
 
-        var motobean: Api = Retrofit.Builder()
-            .baseUrl(Constants.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(Api::class.java)
 
-        val motoList = motobean.getMotoList(tabId)
-        motoList.enqueue(object : Callback<MotoBean> {
-            override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
-                val body = response.body()
-                Log.d(TAG, "onResponse: " + body)
-                motoTypeListAdapter.setListData(body!!.data!!)
+        GlobalScope.launch {
+            var motobean: Api = Retrofit.Builder()
+                .baseUrl(Constants.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(Api::class.java)
+            val motoList = motobean.getMotoList(tabId)
+            Log.d(TAG, "initData: $motoList")
+            withContext(Dispatchers.Main) {
+                if (motoList.code == 0) {
+                    motoTypeListAdapter.setListData(motoList!!.data!!)
+                    (activity as MainActivity).showFragment()
+                } else {
+                    (activity as MainActivity).showFailed()
 
-                (activity as MainActivity).showFragment()
-            }
-
-            override fun onFailure(call: Call<MotoBean>, t: Throwable) {
-                Log.d(TAG, "onFailure: " + t.message)
+                }
             }
         }
-        )
+
+
+//        motoList.enqueue(object : Callback<MotoBean> {
+//            override fun onResponse(call: Call<MotoBean>, response: Response<MotoBean>) {
+//                val body = response.body()
+//                Log.d(TAG, "onResponse: $body")
+//                motoTypeListAdapter.setListData(body!!.data!!)
+//
+//                (activity as MainActivity).showFragment()
+//            }
+//
+//            override fun onFailure(call: Call<MotoBean>, t: Throwable) {
+//                Log.d(TAG, "onFailure: " + t.message)
+//            }
+//        }
+//        )
 
     }
 
