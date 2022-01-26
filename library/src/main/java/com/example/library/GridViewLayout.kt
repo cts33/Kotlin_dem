@@ -59,19 +59,22 @@ class GridViewLayout<T> : LinearLayout {
 
         this.imageLoader = imageLoader
 
+        invalidate()
+
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        if (MAX_WIDTH == 0) {
+            MAX_WIDTH = measureWidth(widthMeasureSpec)
+        }
         if (MAX_WIDTH > 0) {
             pxMoreDH = (MAX_WIDTH - pxImagePadding * 2) / 3 //解决右侧图片和内容对不齐问题
             pxOneMaxDH = MAX_WIDTH * 2 / 3
             initImageLayoutParams()
         }
-        initView()
-    }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        if (MAX_WIDTH == 0) {
-            MAX_WIDTH = measureWidth(widthMeasureSpec)
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        initView()
     }
 
     /**
@@ -129,7 +132,12 @@ class GridViewLayout<T> : LinearLayout {
             for (rowCursor in 0 until rowCount) {
                 val rowLayout = LinearLayout(context)
                 rowLayout.orientation = HORIZONTAL
-                rowLayout.layoutParams = rowPara
+
+                if (rowPara != null) {
+                    rowLayout.layoutParams = rowPara
+                }
+
+
                 if (rowCursor != 0) {
                     rowLayout.setPadding(0, pxImagePadding, 0, 0)
                 }

@@ -13,8 +13,10 @@ import android.widget.BaseAdapter
  * author:chents
  * time:2021/12/22 09:34
  */
-abstract class ImageBaseAdapter<T>(private val context: Context, private val dataList: List<T>) :
-    BaseAdapter() {
+abstract class ImageBaseAdapter<T>(
+    private val context: Context,
+    private val dataList: MutableList<T>
+) : BaseAdapter() {
     override fun getCount(): Int {
         return dataList.size
     }
@@ -28,26 +30,17 @@ abstract class ImageBaseAdapter<T>(private val context: Context, private val dat
     }
 
     fun clearAll() {
-        dataList?.let {
-            it as MutableList
-            it.clear()
-        }
+        dataList?.clear()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
-
         var baseViewHolder: BaseViewHolder? = BaseViewHolder()
         if (baseViewHolder?.convertView == null) {
-
             baseViewHolder?.convertView =
                 LayoutInflater.from(context).inflate(getLayout(), null, false)
         }
-
         bindData(baseViewHolder!!, dataList[position])
-
         Log.d(TAG, "getView: pos="+position+"  converView="+baseViewHolder.convertView)
-
         return baseViewHolder?.convertView!!
     }
 

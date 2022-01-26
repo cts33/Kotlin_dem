@@ -11,18 +11,14 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @mail chentaishan@noboauto.com
  * @date 2021/12/19
  */
-class NetMangager {
-
-    companion object {
-
-        private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(LogInterceptor())
-            .build()
-        var apiService: Api = Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl(Constants.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(Api::class.java)
-    }
+object NetMangager {
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(LogInterceptor())
+        .build()
+    var apiService: Api = Retrofit.Builder()
+        .client(okHttpClient)
+        .baseUrl(Constants.baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(Api::class.java)
 }

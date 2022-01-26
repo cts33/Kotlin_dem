@@ -1,39 +1,23 @@
 package com.lll.kotlin_dem.ui
 
 
-import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.style.RelativeSizeSpan
-import android.util.Log
-import android.util.TypedValue
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.example.library.LoadingLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lll.kotlin_dem.R
-import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
+import com.lll.kotlin_dem.base.BaseActivity
+import com.lll.kotlin_dem.databinding.ActivityMainBinding
 import com.lll.kotlin_dem.utils.Constants
 
-class MainActivity : AppCompatActivity() {
-    lateinit var recycler: RecyclerView
-    lateinit var motoTypeListAdapter: MotoTypeListAdapter;
-    private lateinit var viewpager2: ViewPager2
-    private lateinit var tablayout: TabLayout
-    private lateinit var loadingLayout: LoadingLayout
+class MainActivity : BaseActivity() {
+    private val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+    override fun bindingView(): View {
+        return binding.root
+    }
 
-    private fun initViews() {
-        tablayout = findViewById(R.id.tablayout)
-        viewpager2 = findViewById(R.id.viewpager2)
-        loadingLayout = findViewById(R.id.loadingLayout)
+    override fun initView() {
 
-        viewpager2.adapter = object : FragmentStateAdapter(this) {
+        binding.viewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun createFragment(position: Int): Fragment {
                 var tabId = Constants.tabs[position].tabId
                 return TabFragment.create(tabId!!)
@@ -44,28 +28,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        TabLayoutMediator(tablayout, viewpager2) { tab, position ->
+        TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = Constants.tabs[position].name
         }.attach()
+
+        binding.loadingLayout.showLoading()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        initViews()
-        loadingLayout.showLoading()
-
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_main)
+//        initViews()
+//        loadingLayout.showLoading()
+//
+//    }
 
 
     fun showFragment() {
 
-        loadingLayout.showLoadSuccess()
+        binding.loadingLayout.showLoadSuccess()
     }
 
     fun showFailed() {
 
-        loadingLayout.showLoadFailed()
+        binding.loadingLayout.showLoadFailed()
     }
 
 }
