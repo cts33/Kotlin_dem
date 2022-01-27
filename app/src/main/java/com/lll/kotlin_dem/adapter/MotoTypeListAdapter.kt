@@ -4,58 +4,56 @@ import android.content.Context
 import android.content.Intent
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.style.RelativeSizeSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lll.kotlin_dem.bean.DataItem
-import com.lll.kotlin_dem.R
-import com.lll.kotlin_dem.utils.Constants
+import com.lll.kotlin_dem.databinding.ItemBinding
 import com.lll.kotlin_dem.ui.KoubeiListActivity
+import com.lll.kotlin_dem.utils.Constants
+
+private const val TAG = "MotoTypeListAdapter"
 
 class MotoTypeListAdapter(private val mContext: Context) :
     RecyclerView.Adapter<MotoTypeListAdapter.MyViewHolder>() {
-    var mDatas: ArrayList<DataItem> = ArrayList()
+    private val mDatas = mutableListOf<DataItem>()
+
+
     fun setListData(list: List<DataItem>) {
+        mDatas.clear()
         mDatas.addAll(list)
+
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        var number: TextView = view.findViewById(R.id.number)
-        var title: TextView = view.findViewById(R.id.title)
-        var img: ImageView = view.findViewById(R.id.image1)
-
-    }
+    class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
 
-        return MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item, p0, false))
+        val viewBinding = ItemBinding.inflate(LayoutInflater.from(mContext))
+        return MyViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(viewHolder: MyViewHolder, pos: Int) {
 
 
         with(mDatas[pos]) {
-//            viewHolder.number.text = (pos+1).toString()
 
-            setTextAutoSize(viewHolder.number, (pos + 1).toString())
+            setTextAutoSize(viewHolder.viewBinding.number, (pos + 1).toString())
 
-            viewHolder.title.text = this.brandName + "   " + this.goodName + "\n" + this.grade
+            viewHolder.viewBinding.title.text =
+                this.brandName + "   " + this.goodName + "\n" + this.grade
 
             Log.d(TAG, "onBindViewHolder:goodPic: " + this.goodPic)
 
-            Glide.with(mContext).load(this.goodPic).into(viewHolder.img)
+            Glide.with(mContext).load(this.goodPic).into(viewHolder.viewBinding.image1)
 
-            viewHolder.itemView.setOnClickListener {
+            viewHolder.viewBinding.root.setOnClickListener {
 
                 val intent = Intent(mContext, KoubeiListActivity::class.java)
                 intent.putExtra(Constants.uid, this.goodId)
@@ -64,7 +62,6 @@ class MotoTypeListAdapter(private val mContext: Context) :
         }
     }
 
-    val TAG = "MotoAdpter"
 
     override fun getItemCount(): Int {
         return mDatas.size

@@ -23,7 +23,7 @@ class MainActivity : BaseActivity() {
         binding.viewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun createFragment(position: Int): Fragment {
                 var tabId = Constants.tabs[position].tabId
-                return TabFragment.create(tabId!!)
+                return TabFragment.newInstance(tabId!!)
             }
 
             override fun getItemCount(): Int {

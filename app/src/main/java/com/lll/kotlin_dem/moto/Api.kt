@@ -4,7 +4,6 @@ import com.lll.kotlin_dem.bean.DataItem
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.ResponseResult
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
