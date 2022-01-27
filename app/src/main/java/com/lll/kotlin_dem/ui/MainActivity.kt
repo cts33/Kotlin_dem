@@ -10,8 +10,11 @@ import com.lll.kotlin_dem.databinding.ActivityMainBinding
 import com.lll.kotlin_dem.utils.Constants
 
 class MainActivity : BaseActivity() {
-    private val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun bindingView(): View {
+        binding = ActivityMainBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -34,23 +37,10 @@ class MainActivity : BaseActivity() {
 
         binding.loadingLayout.showLoading()
     }
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//        initViews()
-//        loadingLayout.showLoading()
-//
-//    }
-
-
     fun showFragment() {
-
         binding.loadingLayout.showLoadSuccess()
     }
-
     fun showFailed() {
-
         binding.loadingLayout.showLoadFailed()
     }
 
