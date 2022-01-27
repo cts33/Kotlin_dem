@@ -1,5 +1,6 @@
 package com.lll.kotlin_dem.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -33,20 +34,21 @@ class TabFragment : BaseFragment() {
     private var tabId = ""
 
     override fun initView() {
-        with(getViewBinding().recyclerview) {
 
-            motoTypeListAdapter = MotoTypeListAdapter(requireActivity())
-            this.adapter = motoTypeListAdapter
+        motoTypeListAdapter = MotoTypeListAdapter(activity as Context)
+
+        with(getViewBinding().recyclerview) {
 
             this.layoutManager = LinearLayoutManager(activity)
             this.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
+
+            this.adapter = motoTypeListAdapter
         }
 
     }
 
     override fun initData() {
         tabId = arguments?.getString(typeId) ?: ""
-
 
         GlobalScope.launch {
             var motobean: Api = Retrofit.Builder()
@@ -62,7 +64,6 @@ class TabFragment : BaseFragment() {
                     (activity as MainActivity).showFragment()
                 } else {
                     (activity as MainActivity).showFailed()
-
                 }
             }
         }

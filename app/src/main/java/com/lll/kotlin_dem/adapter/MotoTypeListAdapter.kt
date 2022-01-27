@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lll.kotlin_dem.bean.DataItem
@@ -20,9 +21,9 @@ import com.lll.kotlin_dem.utils.Constants
 private const val TAG = "MotoTypeListAdapter"
 
 class MotoTypeListAdapter(private val mContext: Context) :
+
     RecyclerView.Adapter<MotoTypeListAdapter.MyViewHolder>() {
     private val mDatas = mutableListOf<DataItem>()
-
 
     fun setListData(list: List<DataItem>) {
         mDatas.clear()
@@ -30,8 +31,6 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
         notifyDataSetChanged()
     }
-
-    class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
 
@@ -94,5 +93,7 @@ class MotoTypeListAdapter(private val mContext: Context) :
         )
         textView.text = spannableString
     }
+
+    class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
 
 }
