@@ -13,7 +13,7 @@ class LogInterceptor : Interceptor {
     private val TAG = "LogInterceptor"
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        Log.d(TAG, "intercept: " + request.url)
+        Log.d(TAG, "intercept: " + request.url())
         return chain.proceed(request)
     }
 }

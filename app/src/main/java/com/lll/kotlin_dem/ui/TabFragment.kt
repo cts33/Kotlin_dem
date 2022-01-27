@@ -48,7 +48,7 @@ class TabFragment : Fragment() {
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
         recyclerview.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
-        motoTypeListAdapter = MotoTypeListAdapter(activity!!)
+        motoTypeListAdapter = MotoTypeListAdapter(requireActivity())
         recyclerview.adapter = motoTypeListAdapter
     }
 
@@ -65,7 +65,7 @@ class TabFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initViews(view!!)
+        initViews(requireView())
 
         tabId = arguments?.getString(typeId) ?: ""
 
