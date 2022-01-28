@@ -5,12 +5,10 @@ import android.content.Intent
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lll.kotlin_dem.bean.DataItem
@@ -28,7 +26,6 @@ class MotoTypeListAdapter(private val mContext: Context) :
     fun setListData(list: List<DataItem>) {
         mDatas.clear()
         mDatas.addAll(list)
-
         notifyDataSetChanged()
     }
 
@@ -43,14 +40,11 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
         with(mDatas[pos]) {
 
-            setTextAutoSize(viewHolder.viewBinding.number, (pos + 1).toString())
+            setTextAutoSize(viewHolder.number, (pos + 1).toString())
 
-            viewHolder.viewBinding.title.text =
-                this.brandName + "   " + this.goodName + "\n" + this.grade
+            viewHolder.title.text =  this.brandName + "   " + this.goodName + "\n" + this.grade
 
-            Log.d(TAG, "onBindViewHolder:goodPic: " + this.goodPic)
-
-            Glide.with(mContext).load(this.goodPic).into(viewHolder.viewBinding.image1)
+            Glide.with(mContext).asBitmap().load(this.goodPic).into(viewHolder.imageView)
 
             viewHolder.viewBinding.root.setOnClickListener {
 
@@ -94,6 +88,10 @@ class MotoTypeListAdapter(private val mContext: Context) :
         textView.text = spannableString
     }
 
-    class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+        val imageView = viewBinding.image1
+        val number = viewBinding.number
+        val title = viewBinding.title
+    }
 
 }

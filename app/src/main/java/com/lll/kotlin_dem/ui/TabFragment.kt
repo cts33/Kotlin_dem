@@ -1,8 +1,9 @@
 package com.lll.kotlin_dem.ui
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,15 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lll.kotlin_dem.adapter.MotoTypeListAdapter
 import com.lll.kotlin_dem.base.BaseFragment
 import com.lll.kotlin_dem.databinding.TabFragmentBinding
-import com.lll.kotlin_dem.moto.Api
-import com.lll.kotlin_dem.utils.Constants
+import com.lll.kotlin_dem.moto.NetMangager
 import com.lll.kotlin_dem.utils.Constants.typeId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "TabFragment"
 
@@ -30,36 +28,33 @@ private const val TAG = "TabFragment"
 class TabFragment : BaseFragment() {
 
     private lateinit var motoTypeListAdapter: MotoTypeListAdapter
-    private lateinit var recyclerview: RecyclerView
     private var tabId = ""
 
-    override fun initView() {
+    override fun getViewBinding(): TabFragmentBinding = TabFragmentBinding.inflate(layoutInflater)
 
-        motoTypeListAdapter = MotoTypeListAdapter(activity as Context)
+    override fun initView(view: View) {
 
-        with(getViewBinding().recyclerview) {
+        view as RecyclerView
+        motoTypeListAdapter = MotoTypeListAdapter(requireActivity())
 
-            this.layoutManager = LinearLayoutManager(activity)
-            this.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
+        view.layoutManager = LinearLayoutManager(activity)
+        view.addItemDecoration(DividerItemDecoration(activity, VERTICAL))
 
-            this.adapter = motoTypeListAdapter
-        }
-
+        view.adapter = motoTypeListAdapter
     }
 
     override fun initData() {
         tabId = arguments?.getString(typeId) ?: ""
 
-        GlobalScope.launch {
-            var motobean: Api = Retrofit.Builder()
-                .baseUrl(Constants.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(Api::class.java)
-            val motoList = motobean.getMotoList(tabId)
+        GlobalScope.launch(Dispatchers.IO) {
+
+            Log.d(TAG, "initData1: main thread =${Looper.getMainLooper() == Looper.myLooper()}")
+            val motoList = NetMangager.apiService.getMotoList(tabId)
             Log.d(TAG, "initData: $motoList")
             withContext(Dispatchers.Main) {
+                Log.d(TAG, "initData2: main thread =${Looper.getMainLooper() == Looper.myLooper()}")
                 if (motoList.code == 0) {
+
                     motoTypeListAdapter.setListData(motoList!!.data!!)
                     (activity as MainActivity).showFragment()
                 } else {
@@ -68,8 +63,6 @@ class TabFragment : BaseFragment() {
             }
         }
     }
-
-    override fun getViewBinding(): TabFragmentBinding = TabFragmentBinding.inflate(layoutInflater)
 
     companion object {
         fun newInstance(tabId: String): TabFragment {

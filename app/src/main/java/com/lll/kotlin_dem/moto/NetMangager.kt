@@ -15,6 +15,8 @@ object NetMangager {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(LogInterceptor())
         .build()
+
+    @JvmField
     var apiService: Api = Retrofit.Builder()
         .client(okHttpClient)
         .baseUrl(Constants.baseUrl)
