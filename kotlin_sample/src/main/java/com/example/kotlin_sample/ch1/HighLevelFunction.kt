@@ -39,6 +39,6 @@ class Kotlin1 {
             return a > 0
         })
 //        另一种形式 lambda
-        test1(2, { b -> b > 0 })
+        test1(2) { b -> b > 0 }
     }
 }
