@@ -1,8 +1,8 @@
 rootProject.name = "Kotlin_dem"
 include ':app'
-//include ':test'
-//include ':kotlin_sample'
+include ':test'
+include ':kotlin_sample'
 include ':library'
-//include ':redpoint'
-//include ':mytoast'
-//include ':testoverlaypermission'
+include ':redpoint'
+include ':mytoast'
+include ':testoverlaypermission'
