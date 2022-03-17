@@ -17,6 +17,18 @@ fun main() = runBlocking<Unit> {
     println("Completed in $time ms")
 
 }
+fun main1()= runBlocking<Unit> {
+
+    val time = measureTimeMillis {
+
+        val one = async { doSomethingUsefulone() }
+        val two = async {doSomethingUsefulTwo()}
+
+        println("The answer is ${one.await() + two.await()}")
+    }
+    println("Completed in $time ms")
+
+}
 
 
 suspend fun doSomethingUsefulone(): Int {
