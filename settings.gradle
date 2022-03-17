@@ -1,6 +1,6 @@
 rootProject.name = "Kotlin_dem"
-include ':MMoto'
-include ':test'
+//include ':MMoto'
+//include ':test'
 include ':kotlin_sample'
 include ':library'
 //include ':redpoint'
