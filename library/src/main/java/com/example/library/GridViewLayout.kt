@@ -20,15 +20,19 @@ class GridViewLayout<T> : LinearLayout {
      * 单张图显示时：宽高是最大宽度的2/3
      */
     private var pxOneMaxDH = 0// 单张图最大允许宽高
-
     private var pxMoreDH = 0 // 多张图显示时的单个图片宽高，图片都是正方形显示
     private val pxImagePadding = dip2px(context, 3f) // 图片间的间距
     private var MAX_PER_COLUMN_COUNT = 3 // 最大纵列数量
-    private var onePicPara: LayoutParams? = null
-    private var morePara: LayoutParams? = null
-    private var moreParaColumnFirst: LayoutParams? = null
-    private var rowPara: LayoutParams? = null
+    private var onePicPara: LayoutParams = LayoutParams(pxOneMaxDH, LayoutParams.WRAP_CONTENT)
+    private var rowPara: LayoutParams?  = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     private var mOnItemClickListener: OnItemClickListener? = null
+
+    private var moreParaColumnFirst: LayoutParams = LayoutParams(pxMoreDH, pxMoreDH)
+    private var morePara: LayoutParams = LayoutParams(pxMoreDH, pxMoreDH)
+
+    init{
+        morePara!!.setMargins(pxImagePadding, 0, 0, 0)
+    }
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
         mOnItemClickListener = onItemClickListener
     }
@@ -59,22 +63,19 @@ class GridViewLayout<T> : LinearLayout {
 
         this.imageLoader = imageLoader
 
-        invalidate()
-
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (MAX_WIDTH == 0) {
-            MAX_WIDTH = measureWidth(widthMeasureSpec)
-        }
         if (MAX_WIDTH > 0) {
             pxMoreDH = (MAX_WIDTH - pxImagePadding * 2) / 3 //解决右侧图片和内容对不齐问题
             pxOneMaxDH = MAX_WIDTH * 2 / 3
             initImageLayoutParams()
         }
-
         initView()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (MAX_WIDTH == 0) {
+            MAX_WIDTH = measureWidth(widthMeasureSpec)
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     /**
@@ -104,11 +105,7 @@ class GridViewLayout<T> : LinearLayout {
     }
 
     private fun initImageLayoutParams() {
-        onePicPara = LayoutParams(pxOneMaxDH, LayoutParams.WRAP_CONTENT)
-        moreParaColumnFirst = LayoutParams(pxMoreDH, pxMoreDH)
-        morePara = LayoutParams(pxMoreDH, pxMoreDH)
-        morePara!!.setMargins(pxImagePadding, 0, 0, 0)
-        rowPara = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+
     }
 
     // 根据imageView的数量初始化不同的View布局,还要为每一个View作点击效果
@@ -128,16 +125,13 @@ class GridViewLayout<T> : LinearLayout {
             } else {
                 3
             }
-            val rowCount =   allCount / MAX_PER_COLUMN_COUNT + if (allCount % MAX_PER_COLUMN_COUNT > 0) 1 else 0 // 行数
+            val rowCount =
+                allCount / MAX_PER_COLUMN_COUNT + if (allCount % MAX_PER_COLUMN_COUNT > 0) 1 else 0 // 行数
             for (rowCursor in 0 until rowCount) {
                 val rowLayout = LinearLayout(context)
                 rowLayout.orientation = HORIZONTAL
-
-                if (rowPara != null) {
-                    rowLayout.layoutParams = rowPara
-                }
-
-
+                rowLayout.setLayoutParams(rowPara)
+//                rowLayout.layoutParams = rowPara
                 if (rowCursor != 0) {
                     rowLayout.setPadding(0, pxImagePadding, 0, 0)
                 }
@@ -171,7 +165,7 @@ class GridViewLayout<T> : LinearLayout {
             mImageViewcache!!.adjustViewBounds = true
             mImageViewcache!!.scaleType = ScaleType.FIT_START
             mImageViewcache!!.maxHeight = pxOneMaxDH
-            mImageViewcache!!.layoutParams = onePicPara
+            mImageViewcache!!.setLayoutParams(onePicPara)
             mImageView = mImageViewcache
         } else {
 

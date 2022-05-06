@@ -1,5 +1,7 @@
 package com.example.kotlin_sample.funlambda
 
+import android.widget.Button
+
 /**
  * @description
  * @mail chentaishan@noboauto.com
@@ -7,6 +9,17 @@ package com.example.kotlin_sample.funlambda
  */
 
 fun main() {
+    /**
+     * 方法内部定义局部方法
+     */
+    fun test1(){
+        fun testSub(value:Int):Int{
+           return value*3
+        }
+        print("this is subMethod value=${testSub(4)}")
+    }
+
+
 //    val repeatFun: String.(Int) -> String = { times -> this.repeat(times) }
 //    val twoParameters: (String, Int) -> String = repeatFun // OK
 //
