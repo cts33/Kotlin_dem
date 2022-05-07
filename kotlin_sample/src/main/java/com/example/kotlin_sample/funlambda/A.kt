@@ -21,5 +21,5 @@ class A {
         return name.name == "beijing"
     }
 
-    fun test
+//    fun test
 }

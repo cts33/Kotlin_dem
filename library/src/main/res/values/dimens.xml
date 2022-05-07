@@ -6,7 +6,7 @@
     <dimen name="dialog_round">8dp</dimen>
     <dimen name="btn_round">6dp</dimen>
     <dimen name="btn_socket_width">1dp</dimen>
-
+    <dimen name="text_width">30dp</dimen>
     <dimen name="common_dialog_minWidth">480dp</dimen>
     <dimen name="common_dialog_padding">16dp</dimen>
     <dimen name="common_dialog_back_width">20dp</dimen>
