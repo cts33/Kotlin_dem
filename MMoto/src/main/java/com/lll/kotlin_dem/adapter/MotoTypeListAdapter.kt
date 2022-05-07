@@ -42,9 +42,7 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
         with(mDatas[pos]) {
 
-//            setTextAutoSize(viewHolder.number, (pos + 1).toString())
-
-            viewHolder.number.text = (pos + 1).toString()
+            viewHolder.number.text = " ${(pos + 1)} "
 
             viewHolder.title.text =  this.brandName + "   " + this.goodName + "\n" + this.grade
 

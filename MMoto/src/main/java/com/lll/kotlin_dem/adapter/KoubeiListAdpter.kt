@@ -73,13 +73,13 @@ class KoubeiListAdpter(private val mContext: Context, val vImageWatcher: ImageWa
             listItem.userInfo.auther + "  " + sex + "\n" + "创建时间：" + DateUtil.formatDate(listItem.createTime)
 
 
-//        var layoutParams: RelativeLayout.LayoutParams? = null
-//        val height = heightMap[pos]
-//        if (height == null) {
-//            heightMap[pos] = getGridHeight(listItem.images.size, mContext)
-//        }
-//        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
-//        viewHolder.myGridView.layoutParams = layoutParams
+        var layoutParams: RelativeLayout.LayoutParams? = null
+        val height = heightMap[pos]
+        if (height == null) {
+            heightMap[pos] = getGridHeight(listItem.images.size, mContext)
+        }
+        layoutParams = getRelativeLayoutParams(heightMap[pos]!!)
+        viewHolder.myGridView.layoutParams = layoutParams
 
         viewHolder.myGridView.setDataList(listItem.images) { bean, image ->
 

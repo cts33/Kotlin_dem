@@ -105,7 +105,11 @@ class GridViewLayout<T> : LinearLayout {
     }
 
     private fun initImageLayoutParams() {
-
+        onePicPara = LayoutParams(pxOneMaxDH, LayoutParams.WRAP_CONTENT)
+        moreParaColumnFirst = LayoutParams(pxMoreDH, pxMoreDH)
+        morePara = LayoutParams(pxMoreDH, pxMoreDH)
+        morePara!!.setMargins(pxImagePadding, 0, 0, 0)
+        rowPara = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 
     // 根据imageView的数量初始化不同的View布局,还要为每一个View作点击效果
