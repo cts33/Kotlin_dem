@@ -44,7 +44,9 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
             viewHolder.number.text = " ${(pos + 1)} "
 
-            viewHolder.title.text =  this.brandName + "   " + this.goodName + "\n" + this.grade
+            viewHolder.title.text = this.brandName + " ${this.goodName} "
+            viewHolder.score.text = this.grade.toString()
+            viewHolder.price.text = "￥${this.minPrice}-${this.maxPrice}"
 
             Glide.with(mContext).asBitmap().load(this.goodPic).into(viewHolder.imageView)
 
@@ -64,9 +66,11 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
 
     class MyViewHolder(val viewBinding: ItemBinding) : RecyclerView.ViewHolder(viewBinding.root) {
-        val imageView = viewBinding.image1
         val number = viewBinding.number
+        val imageView = viewBinding.image1
         val title = viewBinding.title
+        val score = viewBinding.score
+        val price = viewBinding.price
     }
 
 }

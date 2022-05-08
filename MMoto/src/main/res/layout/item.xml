@@ -5,11 +5,9 @@
     android:layout_height="80dp">
 
     <TextView
-
         android:id="@+id/number"
         android:layout_width="25dp"
         android:layout_height="80dp"
-
         android:layout_marginLeft="15dp"
         android:autoSizeTextType="uniform"
         android:background="#72000000"
@@ -20,23 +18,46 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/image1"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="5dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/number"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="HHHH"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/image1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/image1"
+        android:layout_marginLeft="10dp"
+        android:text="￥9999"
+        android:textColor="#F44336"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/image1"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="9.9分"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
