@@ -1,4 +1,4 @@
-package com.example.library;
+package com.example.library.views;
 
 public interface ILoadingView   {
     int STATUS_LOADING = 1;

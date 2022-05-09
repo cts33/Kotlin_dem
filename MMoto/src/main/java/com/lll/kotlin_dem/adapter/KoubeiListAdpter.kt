@@ -13,7 +13,7 @@ import byc.imagewatcher.ImageWatcher
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.example.library.GridViewLayout
+import com.example.library.views.GridViewLayout
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.bean.MotoImg

@@ -49,7 +49,7 @@
         android:paddingBottom="20dp" />
 
 
-    <com.example.library.GridViewLayout
+    <com.example.library.views.GridViewLayout
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_below="@+id/shortcoming"

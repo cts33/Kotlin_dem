@@ -16,12 +16,14 @@ import byc.imagewatcher.ImageWatcher.OnStateChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.library.LoadingLayout
+import com.example.library.http.ResponseResult
+import com.example.library.http.RetrofitManager
+import com.example.library.views.LoadingLayout
 import com.lll.kotlin_dem.R
 import com.lll.kotlin_dem.adapter.KoubeiListAdpter
 import com.lll.kotlin_dem.bean.KouBeiDataItem
-import com.lll.kotlin_dem.bean.ResponseResult
-import com.lll.kotlin_dem.moto.NetMangager
+import com.lll.kotlin_dem.moto.Api
+import com.lll.kotlin_dem.utils.Constants
 import com.lll.kotlin_dem.utils.Constants.uid
 import retrofit2.Call
 import retrofit2.Callback
@@ -115,7 +117,9 @@ class KoubeiListActivity : AppCompatActivity() {
 
         val uid = intent.getIntExtra(uid, -1)
 
-        val motoList = NetMangager.apiService.getMotoKouBeiList(uid, 1)
+       val api =  RetrofitManager.getApi(Api::class.java)
+
+//        val motoList = NetMangager.apiService.getMotoKouBeiList(uid, 1)
         motoList.enqueue(object : Callback<ResponseResult<KouBeiDataItem>> {
             override fun onResponse(
                 call: Call<ResponseResult<KouBeiDataItem>>,

@@ -1,6 +1,6 @@
-package com.example.library;
+package com.example.library.views;
 
-import static com.example.library.ILoadingView.*;
+import static com.example.library.views.ILoadingView.*;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package com.example.library
+package com.example.library.views
 
 import android.content.Context
 import android.graphics.Color
@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
+import com.example.library.R
 
 class GridViewLayout<T> : LinearLayout {
     private var mContext: Context

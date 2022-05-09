@@ -1,4 +1,4 @@
-package com.example.library;
+package com.example.library.views;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+
+import com.example.library.R;
 
 public class LoadingView extends LinearLayout implements ILoadingView {
     private ImageView mImage;

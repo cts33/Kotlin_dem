@@ -1,4 +1,4 @@
-package com.lll.kotlin_dem.bean
+package com.example.library.http
 
 /**
  * @description

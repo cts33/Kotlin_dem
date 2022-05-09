@@ -1,8 +1,8 @@
 package com.lll.kotlin_dem.moto
 
+import com.example.library.http.ResponseResult
 import com.lll.kotlin_dem.bean.DataItem
 import com.lll.kotlin_dem.bean.KouBeiDataItem
-import com.lll.kotlin_dem.bean.ResponseResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +13,7 @@ interface Api {
 
 
     @GET("carport/goods/rank/grade/list?rows=-1")
-    suspend fun getMotoList(@Query("goodType")  type:String):   ResponseResult<DataItem>
+    suspend fun getMotoList(@Query("goodType")  type:String): ResponseResult<DataItem>
 
     @GET("carport/goods/praise/score/list/{uid}?limit=20&carId=")
     fun getMotoKouBeiList( @Path("uid")  uid:Int,@Query("page") page:Int): Call<ResponseResult<KouBeiDataItem>>
