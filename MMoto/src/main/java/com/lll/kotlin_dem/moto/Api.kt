@@ -16,7 +16,7 @@ interface Api {
     suspend fun getMotoList(@Query("goodType")  type:String): ResponseResult<DataItem>
 
     @GET("carport/goods/praise/score/list/{uid}?limit=20&carId=")
-    fun getMotoKouBeiList( @Path("uid")  uid:Int,@Query("page") page:Int): ResponseResult<KouBeiDataItem>
+    suspend fun getMotoKouBeiList( @Path("uid")  uid:Int,@Query("page") page:Int): ResponseResult<KouBeiDataItem>
 
     @GET("forum/public/businessEssayController.do?action=22004&id=5737777")
     fun getKouBeiDetail( @Path("autherid")  autherid:Int): Call<ResponseResult<KouBeiDataItem>>

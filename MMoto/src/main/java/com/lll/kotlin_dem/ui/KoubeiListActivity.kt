@@ -26,6 +26,7 @@ import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.moto.Api
 import com.lll.kotlin_dem.utils.Constants
 import com.lll.kotlin_dem.utils.Constants.uid
+import com.lll.kotlin_dem.viewmodel.KoubeiListVM
 import com.lll.kotlin_dem.viewmodel.MotoListViewModel
 import com.lll.kotlin_dem.viewmodel.ResponseTool
 import retrofit2.Call
@@ -116,12 +117,23 @@ class KoubeiListActivity : AppCompatActivity() {
     }
 
     val TAG = "KoubeiActivity"
-    private fun initData() {
+    private   fun initData() {
 
         val uid = intent.getIntExtra(uid, -1)
 
+        val koubeiList = ViewModelProvider(this).get(KoubeiListVM::class.java)
+        koubeiList.mutableMotoList.observe(this){
+            if (it == null) {
+                Log.d(TAG, "onFailure: ")
+                loadingLayout.showLoadFailed()
+            } else {
+                koubeiListAdapter.setListData(it)
 
+                loadingLayout.showLoadSuccess()
+            }
+        }
 
+        koubeiList.getMotoKouBeiList(uid,1)
 
     }
 }
