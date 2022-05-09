@@ -1,8 +1,9 @@
 package com.lll.kotlin_dem.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,11 +43,21 @@ class TabFragment : BaseFragment() {
     override fun initData() {
         tabId = arguments?.getString(typeId) ?: ""
 
-        motoListViewModel = ViewModelProviders.of(this).get(MotoListViewModel::class.java)
-        motoListViewModel.mutableMotoList.observe(this.viewLifecycleOwner) {
-            motoTypeListAdapter.setListData(it)
-            (activity as MainActivity).showFragment()
+        val viewModel = ViewModelProvider(this).get(MotoListViewModel::class.java)
+
+
+        viewModel.mutableMotoList.observe(this) {
+            if (it == null) {
+                Log.d(TAG, "onFailure: ")
+                (activity as MainActivity).showFailed()
+            } else {
+                motoTypeListAdapter.setListData(it)
+
+                (activity as MainActivity).showSuccess()
+            }
         }
+        viewModel.getMutableMotoList(tabId.toString())
+
     }
 
     companion object {

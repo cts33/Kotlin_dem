@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,8 @@ import com.lll.kotlin_dem.bean.KouBeiDataItem
 import com.lll.kotlin_dem.moto.Api
 import com.lll.kotlin_dem.utils.Constants
 import com.lll.kotlin_dem.utils.Constants.uid
+import com.lll.kotlin_dem.viewmodel.MotoListViewModel
+import com.lll.kotlin_dem.viewmodel.ResponseTool
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -117,28 +120,8 @@ class KoubeiListActivity : AppCompatActivity() {
 
         val uid = intent.getIntExtra(uid, -1)
 
-       val api =  RetrofitManager.getApi(Api::class.java)
 
-//        val motoList = NetMangager.apiService.getMotoKouBeiList(uid, 1)
-        motoList.enqueue(object : Callback<ResponseResult<KouBeiDataItem>> {
-            override fun onResponse(
-                call: Call<ResponseResult<KouBeiDataItem>>,
-                response: Response<ResponseResult<KouBeiDataItem>>
-            ) {
-                val body = response.body()
 
-                Log.d(TAG, "onResponse: $body")
-                koubeiListAdapter.setListData(body?.data)
-                loadingLayout.showLoadSuccess()
-            }
 
-            override fun onFailure(call: Call<ResponseResult<KouBeiDataItem>>, t: Throwable) {
-
-                Log.d(TAG, "onFailure: " + t.message)
-                loadingLayout.showLoadFailed()
-
-            }
-        }
-        )
     }
 }

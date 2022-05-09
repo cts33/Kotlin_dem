@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
 
         binding.loadingLayout.showLoading()
     }
-    fun showFragment() {
+    fun showSuccess() {
         binding.loadingLayout.showLoadSuccess()
     }
     fun showFailed() {

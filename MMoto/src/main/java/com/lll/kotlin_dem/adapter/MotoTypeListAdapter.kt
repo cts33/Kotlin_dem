@@ -33,7 +33,7 @@ class MotoTypeListAdapter(private val mContext: Context) :
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
 
-        val viewBinding = ItemBinding.inflate(LayoutInflater.from(mContext))
+        val viewBinding = ItemBinding.inflate(LayoutInflater.from(mContext),p0,false)
         return MyViewHolder(viewBinding)
     }
 

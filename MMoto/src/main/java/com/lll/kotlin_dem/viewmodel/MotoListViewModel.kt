@@ -4,7 +4,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.library.http.RetrofitManager
 import com.lll.kotlin_dem.bean.DataItem
+import com.lll.kotlin_dem.moto.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,15 +25,14 @@ class MotoListViewModel : ViewModel() {
     fun getMutableMotoList(tabId: String) {
         GlobalScope.launch(Dispatchers.IO) {
 
-            Log.d(TAG, "initData1: main thread =${Looper.getMainLooper() == Looper.myLooper()}")
-            val motoList = NetMangager.apiService.getMotoList(tabId)
+            val motoList = ResponseTool.getMotoList(tabId)
 
             withContext(Dispatchers.Main) {
-                Log.d(TAG, "initData2: main thread =${Looper.getMainLooper() == Looper.myLooper()}")
-                if (motoList.code == 0) {
-                    mutableMotoList.postValue(motoList.data)
+
+                if (motoList == null || motoList.code != 0) {
+                    Log.d(TAG, "getMutableMotoList: error")
                 } else {
-                    Log.d(TAG, "getMutableMotoList: failed")
+                    mutableMotoList.postValue(motoList.data)
                 }
             }
         }
