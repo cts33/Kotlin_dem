@@ -1,8 +1,10 @@
 rootProject.name = "Kotlin_dem"
-include ':MMoto'
+//include ':MMoto'
 //include ':test'
-include ':kotlin_sample'
-include ':library'
+//include ':kotlin_sample'
+//include ':library'
 //include ':redpoint'
 //include ':mytoast'
 //include ':testoverlaypermission'
+include ':testshimmer'
+include ':shimmer'

@@ -1,0 +1,30 @@
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+apply plugin: 'com.android.library'
+//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+
+android {
+  compileSdkVersion 31
+  buildToolsVersion '30.0.3'
+  viewBinding {
+    enabled = true
+  }
+
+  defaultConfig {
+    minSdkVersion 23
+    targetSdkVersion 31
+    versionCode 1
+    versionName "1.0"
+  }
+}
+
+dependencies {
+  implementation "androidx.annotation:annotation:1.0.1"
+}
+

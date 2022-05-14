@@ -16,3 +16,4 @@
 local.properties
 .idea/gradle.xml
 /app/build/
+/shimmer/build/
