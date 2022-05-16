@@ -62,7 +62,7 @@ class MainActivity : Activity(), View.OnClickListener {
         // If a toast is already showing, hide it
         toast?.cancel()
 
-        val shimmerBuilder = Shimmer.AlphaHighlightBuilder()
+        val shimmerBuilder = Shimmer.ColorHighlightBuilder()
         shimmerViewContainer.setShimmer(
             when (preset) {
                 1 -> {
@@ -97,7 +97,7 @@ class MainActivity : Activity(), View.OnClickListener {
                 }
                 else -> {
                     toast = Toast.makeText(this, "Default", Toast.LENGTH_SHORT)
-                    shimmerBuilder
+                    shimmerBuilder.setTilt(0f)
                 }
             }?.build())
 
